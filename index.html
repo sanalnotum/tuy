@@ -5,52 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TÜY | Tasarla · Üret · Yay</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e1e24">
+  <meta name="theme-color" content="#F9F9FB">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Google Fonts: Inter & JetBrains Mono (Senaryo Daktilo Hissi) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #141418;
-      --card-bg: #1e1e24;
-      --card-hover: #26262e;
-      --border: #2e2e38;
-      --accent: #d4af37; /* Asil altın/tüy tınısı */
-      --accent-glow: rgba(212, 175, 55, 0.2);
-      --text: #f0f0f3;
-      --text-muted: #9e9ea7;
-      --danger: #e65050;
-      --success: #34c759;
-      --radius: 14px;
-      --font-main: 'Inter', sans-serif;
+      --bg: #F8F9FA;
+      --card-bg: #FFFFFF;
+      --card-subtle: #F3F4F6;
+      --border: #E5E7EB;
+      --border-light: #EEF0F2;
+      --accent: #B89748; /* Asil Mat Altın / Tüy Dokunuşu */
+      --accent-soft: rgba(184, 151, 72, 0.12);
+      --text: #1F2937;
+      --text-muted: #6B7280;
+      --danger: #DC2626;
+      --success: #16A34A;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+      --font-main: 'Plus Jakarta Sans', sans-serif;
       --font-serif: 'Cinzel', serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
     body {
       font-family: var(--font-main);
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding-bottom: 60px;
+      padding-bottom: 70px;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* Üst Bar */
     header {
-      background: rgba(20, 20, 24, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border);
-      padding: 12px 18px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -62,26 +68,28 @@
       cursor: pointer;
     }
     .brand img {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       object-fit: cover;
-      border: 1px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
     }
     .brand-title {
       font-family: var(--font-serif);
       font-size: 1.25rem;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       color: var(--accent);
       line-height: 1;
     }
     .brand-sub {
       font-size: 0.65rem;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       color: var(--text-muted);
       text-transform: uppercase;
-      margin-top: 3px;
+      margin-top: 4px;
+      font-weight: 500;
     }
 
     .save-indicator {
@@ -90,188 +98,291 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      background: var(--card-subtle);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 500;
     }
     .save-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 6px var(--success);
+      box-shadow: 0 0 5px var(--success);
     }
 
-    /* Ana Sayfa: Kategori Kartları */
     .container {
-      max-width: 900px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 20px 16px;
+      padding: 24px 18px;
     }
+
+    /* Kategori Butonları */
     .section-title {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.2px;
       color: var(--text-muted);
       margin: 20px 0 12px 4px;
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .grid-categories {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 12px;
-      margin-bottom: 25px;
+      margin-bottom: 28px;
     }
     .cat-btn {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 12px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
-      color: var(--text);
+      box-shadow: var(--shadow-sm);
     }
-    .cat-btn:hover, .cat-btn:active {
+    .cat-btn:hover {
       transform: translateY(-2px);
       border-color: var(--accent);
-      background: var(--card-hover);
-      box-shadow: 0 4px 15px var(--accent-glow);
+      box-shadow: var(--shadow-md);
     }
     .cat-btn .icon { font-size: 1.8rem; }
-    .cat-btn .label { font-size: 0.85rem; font-weight: 500; text-align: center; }
+    .cat-btn .label { font-size: 0.88rem; font-weight: 600; color: var(--text); }
 
     /* Proje Listesi */
     .project-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
-    .project-card:hover { background: var(--card-hover); border-color: #3f3f4c; }
+    .project-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
     .proj-badge {
       font-size: 0.65rem;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 12px;
-      background: #2b2b36;
+      background: var(--accent-soft);
       color: var(--accent);
-      text-transform: uppercase;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
       margin-right: 8px;
     }
-    .proj-title { font-weight: 600; font-size: 0.95rem; }
-    .proj-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+    .proj-title { font-weight: 600; font-size: 1rem; color: var(--text); }
+    .proj-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
 
-    /* Proje Editör Ekranı */
+    /* Yedekleme Alanı (Alt Kısım) */
+    .backup-box {
+      margin-top: 35px;
+      padding: 16px;
+      background: var(--card-subtle);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .backup-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .backup-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-subtle {
+      padding: 7px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-subtle:hover { border-color: var(--accent); }
+
+    /* EDITÖR EKRANI */
     #editorView { display: none; }
+    
+    .editor-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-spark {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: linear-gradient(135deg, #fff, #fdfaf3);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
     .editor-top-nav {
       display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 20px;
       overflow-x: auto;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
     }
     .tab-btn {
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 8px 14px;
+      padding: 9px 16px;
       border-radius: 20px;
       font-size: 0.82rem;
+      font-weight: 500;
       white-space: nowrap;
       cursor: pointer;
+      transition: all 0.15s;
     }
     .tab-btn.active {
       background: var(--accent);
-      color: #000;
+      color: #FFF;
       border-color: var(--accent);
       font-weight: 600;
+      box-shadow: 0 3px 10px var(--accent-soft);
     }
 
-    .form-group {
-      margin-bottom: 16px;
-    }
+    /* Form Elemanları */
+    .form-group { margin-bottom: 18px; }
     label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
+      font-weight: 600;
     }
-    input[type="text"], textarea, select {
+    input[type="text"], textarea {
       width: 100%;
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 12px;
-      border-radius: 10px;
+      padding: 13px 16px;
+      border-radius: var(--radius-sm);
       font-family: inherit;
       font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
     }
     input[type="text"]:focus, textarea:focus {
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
     }
+
+    /* Canlı Sayaç & Daktilo Alanı */
+    .stats-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .stats-bar span b { color: var(--accent); }
     textarea.script-mode {
       font-family: var(--font-mono);
-      line-height: 1.6;
-      font-size: 0.9rem;
-      background: #111115;
+      line-height: 1.65;
+      font-size: 0.92rem;
+      background: #FAFBFD;
     }
 
     /* Karakter & Sahne Kartları */
     .sub-item-card {
-      background: #191920;
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 12px;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
       position: relative;
+      box-shadow: var(--shadow-sm);
     }
     .remove-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      color: var(--danger);
+      top: 12px;
+      right: 14px;
+      color: #9CA3AF;
       background: transparent;
       border: none;
       font-size: 1.1rem;
       cursor: pointer;
     }
+    .remove-btn:hover { color: var(--danger); }
     .add-btn {
       width: 100%;
-      padding: 10px;
-      background: transparent;
-      border: 1px dashed var(--accent);
+      padding: 12px;
+      background: #FFFFFF;
+      border: 1.5px dashed var(--accent);
       color: var(--accent);
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 600;
       margin-top: 8px;
+      transition: all 0.15s;
     }
+    .add-btn:hover { background: var(--accent-soft); }
 
-    /* Paylaşım & Aksiyon Barı */
+    /* Aksiyon Çubuğu */
     .action-row {
       display: flex;
       gap: 10px;
-      margin-top: 25px;
+      margin-top: 28px;
       flex-wrap: wrap;
     }
     .btn {
       flex: 1;
-      padding: 12px;
-      border-radius: 10px;
+      min-width: 140px;
+      padding: 13px;
+      border-radius: var(--radius-sm);
       border: none;
       font-size: 0.85rem;
       font-weight: 600;
@@ -280,20 +391,57 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      box-shadow: var(--shadow-sm);
     }
-    .btn-wa { background: #25D366; color: #fff; }
-    .btn-pdf { background: #e0e0e0; color: #111; }
-    .btn-danger { background: rgba(230, 80, 80, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+    .btn-wa { background: #25D366; color: #FFF; }
+    .btn-pdf { background: #374151; color: #FFF; }
+    .btn-danger { background: #FEF2F2; color: var(--danger); border: 1px solid #FCA5A5; }
 
-    /* Yalnızca Yazdırma / PDF Modu Stili */
+    /* Kıvılcım / İlham Modal */
+    .spark-modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 20px;
+    }
+    .spark-card {
+      background: #FFF;
+      padding: 24px;
+      border-radius: var(--radius);
+      max-width: 460px;
+      width: 100%;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+    .spark-card h3 {
+      font-family: var(--font-serif);
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+    .spark-card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text);
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    /* Baskı / PDF Tasarımı */
     @media print {
       body { background: #fff !important; color: #000 !important; font-family: serif; }
-      header, .editor-top-nav, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView { display: none !important; }
+      header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar { display: none !important; }
       #editorView { display: block !important; }
       .tab-content { display: block !important; margin-bottom: 30px; }
-      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; }
-      .sub-item-card { border: 1px solid #ccc !important; background: #fff !important; page-break-inside: avoid; }
-      .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 20px; padding-bottom: 10px; }
+      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; }
+      .sub-item-card { border: 1px solid #ccc !important; page-break-inside: avoid; margin-bottom: 15px; }
+      .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 25px; padding-bottom: 10px; }
       .print-header h1 { font-size: 24pt; margin: 0; font-family: 'Cinzel', serif; }
     }
     .print-header { display: none; }
@@ -301,11 +449,10 @@
 </head>
 <body>
 
-  <!-- Üst Başlık & Menü -->
+  <!-- Üst Bar -->
   <header>
     <div class="brand" onclick="goHome()">
-      <!-- Logonuz buraya gelecek -->
-      <img src="logo.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\'><text y=\'75\' font-size=\'75\'>🪶</text></svg>'" alt="TÜY Logo">
+      <img src="logo.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23B89748\'><text y=\'75\' font-size=\'75\'>🪶</text></svg>'" alt="TÜY Logo">
       <div>
         <div class="brand-title">TÜY</div>
         <div class="brand-sub">Tasarla · Üret · Yay</div>
@@ -319,7 +466,7 @@
 
   <main class="container">
     
-    <!-- ANA SAYFA: Kategori Seçimi ve Arşiv -->
+    <!-- ANA SAYFA: Kategori ve Arşiv -->
     <section id="homeView">
       <div class="section-title">Hemen Başla (Kıvılcım Yakala)</div>
       <div class="grid-categories">
@@ -337,58 +484,75 @@
         </div>
         <div class="cat-btn" onclick="createNewProject('Hızlı Fikir')">
           <span class="icon">⚡</span>
-          <span class="label">Fikir Kıvılcımı</span>
+          <span class="label">Fikir Notu</span>
         </div>
       </div>
 
       <div class="section-title">
         <span>Kayıtlı Çalışmalarım</span>
-        <span id="totalCount" style="font-size:0.75rem; color:var(--accent);">0 Proje</span>
+        <span id="totalCount" style="color:var(--accent);">0 Proje</span>
       </div>
-      <div id="projectList">
-        <!-- Projeler Dinamik Yüklenecek -->
+      <div id="projectList"></div>
+
+      <!-- JSON Arşiv & Cihaz Aktarım Alanı -->
+      <div class="backup-box">
+        <div class="backup-text">
+          <b>Taşınabilir Arşiv:</b> Verilerinizi diğer cihazlarınıza (PC/Tablet) aktarabilir veya yedekleyebilirsiniz.
+        </div>
+        <div class="backup-actions">
+          <button class="btn-subtle" onclick="exportData()">💾 Yedeği İndir (JSON)</button>
+          <button class="btn-subtle" onclick="document.getElementById('importFile').click()">📂 Yedek Yükle</button>
+          <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+        </div>
       </div>
     </section>
 
     <!-- PROJE EDİTÖRÜ -->
     <section id="editorView">
+      
+      <!-- Üst Navigasyon & Kıvılcım Zarı -->
+      <div class="editor-header-bar">
+        <button class="btn-back" onclick="goHome()">‹ Tüm Projelerim</button>
+        <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım Yakala</button>
+      </div>
+
       <div class="print-header">
         <h1 id="printTitle">Proje Adı</h1>
         <p id="printMeta">TÜY Yaratıcı Yazarlık Arşivi</p>
       </div>
 
-      <!-- Sekme Barı -->
+      <!-- Sekmeler -->
       <div class="editor-top-nav">
-        <button class="tab-btn active" onclick="switchTab('tab-core')">🎯 Temel Fikir & Logline</button>
-        <button class="tab-btn" onclick="switchTab('tab-characters')">🎭 Karakterler</button>
-        <button class="tab-btn" onclick="switchTab('tab-scenes')">📑 Sahne Kartları</button>
-        <button class="tab-btn" onclick="switchTab('tab-draft')">🖋️ Taslak & Diyalog</button>
+        <button class="tab-btn active" onclick="switchTab(this, 'tab-core')">🎯 Temel Fikir</button>
+        <button class="tab-btn" onclick="switchTab(this, 'tab-characters')">🎭 Karakterler</button>
+        <button class="tab-btn" onclick="switchTab(this, 'tab-scenes')">📑 Sahne Kartları</button>
+        <button class="tab-btn" onclick="switchTab(this, 'tab-draft')">🖋️ Taslak & Daktilo</button>
       </div>
 
-      <!-- SEKME 1: Çekirdek Fikir -->
+      <!-- SEKME 1: Temel Fikir -->
       <div id="tab-core" class="tab-content">
         <div class="form-group">
           <label>Çalışma Başlığı</label>
           <input type="text" id="pTitle" placeholder="Örn: Sessizliğin Rengi" oninput="autoSave()">
         </div>
         <div class="form-group">
-          <label>Tür & Dönem / Atmosfer</label>
-          <input type="text" id="pGenre" placeholder="Örn: Psikolojik Dram, 1970'ler İstanbul, Yağmurlu Sonbahar" oninput="autoSave()">
+          <label>Tür & Dönem / Mekan Atmosferi</label>
+          <input type="text" id="pGenre" placeholder="Örn: 1970'ler, Yağmurlu Boğaz Kıyısı, Psikolojik Gerilim" oninput="autoSave()">
         </div>
         <div class="form-group">
-          <label>Logline (Tek Cümlelik Kanca / Kim, Ne İstiyor, Engel Ne?)</label>
-          <textarea id="pLogline" rows="3" placeholder="Geçmişiyle yüzleşmekten korkan bir saat ustası..." oninput="autoSave()"></textarea>
+          <label>Logline (Tek Cümlelik Öz / Kim, Ne İstiyor, Engel Ne?)</label>
+          <textarea id="pLogline" rows="3" placeholder="Emekli bir terzi, sandığında bulduğu eski bir kumaşın izini sürerken..." oninput="autoSave()"></textarea>
         </div>
         <div class="form-group">
           <label>Dramatik Çatışma & Alt Metin (Tema)</label>
-          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi anlatıyor? Karakterin içsel yolculuğu ne?" oninput="autoSave()"></textarea>
+          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi anlatıyor? Karakterin içsel hesaplaşması ne?" oninput="autoSave()"></textarea>
         </div>
       </div>
 
       <!-- SEKME 2: Karakterler -->
       <div id="tab-characters" class="tab-content" style="display:none;">
         <div id="characterList"></div>
-        <button class="add-btn" onclick="addCharacter()">+ Yeni Karakter Ekle</button>
+        <button class="add-btn" onclick="addCharacter()">+ Yeni Karakter Kartı Ekle</button>
       </div>
 
       <!-- SEKME 3: Sahne Kartları -->
@@ -397,36 +561,64 @@
         <button class="add-btn" onclick="addScene()">+ Yeni Sahne Kartı Ekle</button>
       </div>
 
-      <!-- SEKME 4: Serbest Taslak & Diyalog (Daktilo Modu) -->
+      <!-- SEKME 4: Daktilo & Taslak Modu -->
       <div id="tab-draft" class="tab-content" style="display:none;">
+        <div class="stats-bar">
+          <span>Kelime: <b id="wordCount">0</b></span>
+          <span>Tahmini Sayfa: <b id="pageCount">0</b></span>
+          <span>Süre: <b id="screenTime">~0 Dk</b></span>
+        </div>
         <div class="form-group">
-          <label>Senaryo Taslağı / Serbest Metin (Daktilo Formatı)</label>
-          <textarea id="pDraft" class="script-mode" rows="18" placeholder="İÇ. ÇALIŞMA ODASI - GECE&#10;&#10;Masanın üzerinde tek bir mum yanmaktadır..." oninput="autoSave()"></textarea>
+          <textarea id="pDraft" class="script-mode" rows="18" placeholder="İÇ. ATÖLYE - GECE&#10;&#10;Masanın üzerinde tek bir gaz lambası yanmaktadır. Yağmur damlaları cama sertçe vurur..." oninput="handleDraftInput()"></textarea>
         </div>
       </div>
 
-      <!-- Alt Aksiyonlar: WhatsApp, PDF ve Silme -->
+      <!-- Alt İşlemler -->
       <div class="action-row">
         <button class="btn btn-wa" onclick="shareWhatsApp()">📱 WhatsApp'a Gönder</button>
-        <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF Olarak İndir / Yazdır</button>
+        <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF / Yazdır</button>
         <button class="btn btn-danger" onclick="deleteCurrentProject()">🗑️ Projeyi Sil</button>
       </div>
     </section>
 
   </main>
 
+  <!-- Yaratıcı Kıvılcım (Zar) Modalı -->
+  <div class="spark-modal" id="sparkModal" onclick="closeSpark(event)">
+    <div class="spark-card" onclick="event.stopPropagation()">
+      <h3>🎲 Yaratıcı Fısıltı</h3>
+      <p id="sparkText">Beklenmedik bir misafir kapıyı çalar...</p>
+      <button class="btn-subtle" onclick="triggerSpark()" style="margin-right:8px;">Başka Bir Tane Fısılda</button>
+      <button class="btn-subtle" onclick="document.getElementById('sparkModal').style.display='none'">Kapat</button>
+    </div>
+  </div>
+
   <script>
-    // --- VERİ MODELİ VE YEREL DEPOLAMA (ASLA KAYBOLMAZ) ---
-    const STORAGE_KEY = 'TUY_APP_DATA_V1';
+    // --- VERİ MODELİ (Sıfır Kayıp Garantisi) ---
+    const STORAGE_KEY = 'TUY_DATA_STORE_V2';
     let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [] };
     let currentProjId = null;
     let saveTimeout = null;
+
+    // Yaratıcı Zar Havuzu
+    const sparks = [
+      "Karakter doğruyu söylerse hayatı geri dönülmez şekilde değişecektir.",
+      "Mekanda elektrikler aniden kesilir veya tek ışık kaynağı söner.",
+      "Karakter tam çıkacakken cebinde unutulmuş yabancı bir eşya bulur.",
+      "Bir telefon çalar ama açıldığında karşıdan yalnızca derin bir nefes sesi gelir.",
+      "Karakter en büyük zaafını bir anlığına güce dönüştürmek zorunda kalır.",
+      "Diyalog sırasında karakterler birbirinin gözüne bakmaktan ısrarla kaçınır.",
+      "Mekanda geçmişi hatırlatan çok belirgin bir koku yayılır.",
+      "İki karakter de aynı sırrı saklamaktadır ama birbirlerinin bildiğinden habersizdir.",
+      "Beklenmedik bir kapı çalışı ya da sert bir ayak sesi her şeyi böler.",
+      "Karakter ağzından kaçırdığı tek bir kelimeyi toparlamaya çalışır."
+    ];
 
     function persist() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
       const dot = document.getElementById('saveStatus');
       dot.innerText = 'Kayıt Edildi';
-      setTimeout(() => { dot.innerText = 'Kayıtlı'; }, 1200);
+      setTimeout(() => { dot.innerText = 'Kayıtlı'; }, 1000);
     }
 
     function autoSave() {
@@ -445,7 +637,7 @@
         proj.updatedAt = new Date().toISOString();
 
         persist();
-      }, 400);
+      }, 350);
     }
 
     // --- NAVİGASYON ---
@@ -489,9 +681,13 @@
       document.getElementById('printTitle').innerText = proj.title || 'İsimsiz Taslak';
       document.getElementById('printMeta').innerText = `${proj.type} · ${proj.genre || ''}`;
 
+      calculateStats(proj.draft || '');
       renderCharacters();
       renderScenes();
-      switchTab('tab-core');
+
+      // Varsayılan sekmeye dön
+      const firstTabBtn = document.querySelector('.tab-btn');
+      switchTab(firstTabBtn, 'tab-core');
 
       document.getElementById('homeView').style.display = 'none';
       document.getElementById('editorView').style.display = 'block';
@@ -504,7 +700,7 @@
       document.getElementById('totalCount').innerText = `${appData.projects.length} Proje`;
 
       if (appData.projects.length === 0) {
-        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:30px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçip başlayın!</p>';
+        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:35px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçerek başlayın!</p>';
         return;
       }
 
@@ -518,21 +714,37 @@
               <span class="proj-badge">${p.type}</span>
               <span class="proj-title">${p.title || 'İsimsiz Taslak'}</span>
             </div>
-            <div class="proj-date">Son dokunuş: ${dateStr}</div>
+            <div class="proj-date">Son güncelleme: ${dateStr}</div>
           </div>
-          <span style="color:var(--accent); font-size:1.2rem;">›</span>
+          <span style="color:var(--accent); font-size:1.3rem;">›</span>
         `;
         card.onclick = () => openProject(p.id);
         listEl.appendChild(card);
       });
     }
 
-    // --- SEKME DEĞİŞİMİ ---
-    function switchTab(tabId) {
+    // --- SEKME VE İSTATİSTİKLER ---
+    function switchTab(btn, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(tabId).style.display = 'block';
-      event.target.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    function handleDraftInput() {
+      const text = document.getElementById('pDraft').value;
+      calculateStats(text);
+      autoSave();
+    }
+
+    function calculateStats(text) {
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const pages = (words / 220).toFixed(1); // 1 sayfa senaryo ortalama 200-250 kelimedir
+      const minutes = Math.round(words / 200); // 1 sayfa = ~1 dakika
+
+      document.getElementById('wordCount').innerText = words;
+      document.getElementById('pageCount').innerText = pages > 0 ? pages : 0;
+      document.getElementById('screenTime').innerText = `~${minutes > 0 ? minutes : 1} Dk`;
     }
 
     // --- KARAKTER YÖNETİMİ ---
@@ -548,19 +760,19 @@
           <button class="remove-btn" onclick="removeCharacter(${index})">✕</button>
           <div class="form-group" style="margin-bottom:8px;">
             <label>Karakter Adı & Yaşı</label>
-            <input type="text" value="${char.name || ''}" placeholder="Örn: Selim (42)" oninput="updateChar(${index}, 'name', this.value)">
+            <input type="text" value="${char.name || ''}" placeholder="Örn: Sevim Hanım (54)" oninput="updateChar(${index}, 'name', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:8px;">
-            <label>Dramatik Arzu & Hedef (Ne İstiyor?)</label>
-            <input type="text" value="${char.goal || ''}" placeholder="Örn: Saat kulesini tamir etmek" oninput="updateChar(${index}, 'goal', this.value)">
+            <label>Dramatik Hedef (Ne İstiyor?)</label>
+            <input type="text" value="${char.goal || ''}" placeholder="Örn: Kızının mektuplarını bulmak" oninput="updateChar(${index}, 'goal', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:8px;">
-            <label>İç Çatışma / Zaaf / Gizli Sırrı</label>
-            <input type="text" value="${char.flaw || ''}" placeholder="Örn: Yalan söyleyemez ama gerçeği saklar" oninput="updateChar(${index}, 'flaw', this.value)">
+            <label>Zaaf / Gizli Sır</label>
+            <input type="text" value="${char.flaw || ''}" placeholder="Örn: Unutmaktan delicesine korkuyor" oninput="updateChar(${index}, 'flaw', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label>Kostüm / Aksesuar / Belirgin Tavır</label>
-            <textarea rows="2" placeholder="Sürekli eski bir köstekli saati tutar..." oninput="updateChar(${index}, 'notes', this.value)">${char.notes || ''}</textarea>
+            <label>Kostüm, Aksesuar ve Tavır</label>
+            <textarea rows="2" placeholder="Boynunda inci kolye, titreyen eller..." oninput="updateChar(${index}, 'notes', this.value)">${char.notes || ''}</textarea>
           </div>
         `;
         container.appendChild(div);
@@ -581,14 +793,14 @@
     }
 
     function removeCharacter(index) {
-      if (!confirm('Bu karakteri silmek istediğinizden emin misiniz?')) return;
+      if (!confirm('Bu karakter kartı silinsin mi?')) return;
       const proj = appData.projects.find(p => p.id === currentProjId);
       proj.characters.splice(index, 1);
       persist();
       renderCharacters();
     }
 
-    // --- SAHNE KARTLARI YÖNETİMİ ---
+    // --- SAHNE KARTLARI ---
     function renderScenes() {
       const container = document.getElementById('sceneList');
       container.innerHTML = '';
@@ -600,16 +812,16 @@
         div.innerHTML = `
           <button class="remove-btn" onclick="removeScene(${index})">✕</button>
           <div class="form-group" style="margin-bottom:8px;">
-            <label>Sahne ${index + 1}: Başlık & Mekan (İÇ/DIŞ - GÜN/GECE)</label>
-            <input type="text" value="${scene.slug || ''}" placeholder="Örn: İÇ. ATÖLYE - GECE" oninput="updateScene(${index}, 'slug', this.value)">
+            <label>Sahne ${index + 1}: Başlık & Mekan (İÇ/DIŞ - ZAMAN)</label>
+            <input type="text" value="${scene.slug || ''}" placeholder="Örn: İÇ. TERZİHANE - AKŞAMÜSTÜ" oninput="updateScene(${index}, 'slug', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:8px;">
-            <label>Olay Örgüsü / Sahnede Ne Oluyor?</label>
-            <textarea rows="2" placeholder="Selim eski defteri açar ve kilitli bir mektup bulur..." oninput="updateScene(${index}, 'action', this.value)">${scene.action || ''}</textarea>
+            <label>Olay Örgüsü (Ne Yaşanıyor?)</label>
+            <textarea rows="2" placeholder="Sandık açılır, tozlu mektuplar ortaya çıkar..." oninput="updateScene(${index}, 'action', this.value)">${scene.action || ''}</textarea>
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label>Duygusal Dönüm Noktası</label>
-            <input type="text" value="${scene.beat || ''}" placeholder="Örn: Şüphe yerini kesin bir karara bırakır" oninput="updateScene(${index}, 'beat', this.value)">
+            <label>Duygusal Kırılma Noktası</label>
+            <input type="text" value="${scene.beat || ''}" placeholder="Örn: Hüzün yerini derin bir kararlılığa bırakır" oninput="updateScene(${index}, 'beat', this.value)">
           </div>
         `;
         container.appendChild(div);
@@ -630,7 +842,7 @@
     }
 
     function removeScene(index) {
-      if (!confirm('Bu sahne kartını silmek istediğinizden emin misiniz?')) return;
+      if (!confirm('Bu sahne kartı silinsin mi?')) return;
       const proj = appData.projects.find(p => p.id === currentProjId);
       proj.scenes.splice(index, 1);
       persist();
@@ -644,7 +856,49 @@
       goHome();
     }
 
-    // --- WHATSAPP İLE ARŞİVİ KENDİNE ATMA ---
+    // --- KIVILCIM / İLHAM ZARI ---
+    function triggerSpark() {
+      const randomText = sparks[Math.floor(Math.random() * sparks.length)];
+      document.getElementById('sparkText').innerText = `"${randomText}"`;
+      document.getElementById('sparkModal').style.display = 'flex';
+    }
+
+    function closeSpark(e) {
+      document.getElementById('sparkModal').style.display = 'none';
+    }
+
+    // --- DIŞA / İÇE AKTAR (JSON TAŞIMA) ---
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `TUY_Yedek_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    function importData(event) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.projects && Array.isArray(imported.projects)) {
+            appData = imported;
+            persist();
+            renderProjectList();
+            alert('Yedek başarıyla yüklendi!');
+          } else {
+            alert('Geçersiz yedek dosyası.');
+          }
+        } catch(err) {
+          alert('Dosya okunurken bir hata oluştu.');
+        }
+      };
+      reader.readAsText(event.target.files[0]);
+    }
+
+    // --- WHATSAPP İLE GÖNDER ---
     function shareWhatsApp() {
       const proj = appData.projects.find(p => p.id === currentProjId);
       if (!proj) return;
@@ -658,7 +912,7 @@
       if (proj.characters.length > 0) {
         msg += `\n🎭 *KARAKTERLER:*\n`;
         proj.characters.forEach(c => {
-          msg += `• *${c.name || 'Karakter'}*: Arzu: ${c.goal || '-'} | Zaaf: ${c.flaw || '-'}\n`;
+          msg += `• *${c.name || 'Karakter'}*: Hedef: ${c.goal || '-'} | Zaaf: ${c.flaw || '-'}\n`;
         });
       }
 
@@ -677,10 +931,9 @@
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
-    // --- BAŞLANGIÇ ÇAĞRISI ---
+    // Başlangıç Yüklemesi
     renderProjectList();
 
-    // PWA Service Worker Kaydı
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }
