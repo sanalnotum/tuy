@@ -1,57 +1,70 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>TÜY | Tasarla · Üret · Yay</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#F9F9FB">
+  <meta name="theme-color" content="#F8F9FA">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    /* --- TEMA DEĞİŞKENLERİ --- */
+    :root[data-theme="light"] {
       --bg: #F8F9FA;
       --card-bg: #FFFFFF;
-      --card-subtle: #F3F4F6;
-      --border: #E5E7EB;
-      --border-light: #EEF0F2;
-      --accent: #B89748; /* Asil Mat Altın / Tüy Dokunuşu */
-      --accent-soft: rgba(184, 151, 72, 0.12);
-      --text: #1F2937;
-      --text-muted: #6B7280;
+      --card-subtle: #F1F3F5;
+      --border: #D1D5DB;
+      --border-focus: #B89748;
+      --accent: #9B7B2C;
+      --accent-soft: rgba(184, 151, 72, 0.14);
+      --text: #111827;
+      --text-muted: #4B5563;
+      --input-bg: #FFFFFF;
+      --shadow: 0 4px 14px rgba(0,0,0,0.05);
       --danger: #DC2626;
-      --success: #16A34A;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-      --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
-      --font-main: 'Plus Jakarta Sans', sans-serif;
-      --font-serif: 'Cinzel', serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --success: #15803D;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #111114;
+      --card-bg: #1B1B20;
+      --card-subtle: #23232A;
+      --border: #32323D;
+      --border-focus: #D4AF37;
+      --accent: #E5C358;
+      --accent-soft: rgba(229, 195, 88, 0.16);
+      --text: #F9FAFB;
+      --text-muted: #9CA3AF;
+      --input-bg: #141418;
+      --shadow: 0 4px 14px rgba(0,0,0,0.4);
+      --danger: #EF4444;
+      --success: #22C55E;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
     body {
-      font-family: var(--font-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       padding-bottom: 70px;
+      line-height: 1.6;
+      transition: background-color 0.25s ease, color 0.25s ease;
       -webkit-font-smoothing: antialiased;
     }
 
     /* Üst Bar */
     header {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
+      background: var(--card-bg);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -60,6 +73,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: var(--shadow);
     }
     .brand {
       display: flex;
@@ -72,59 +86,80 @@
       height: 40px;
       border-radius: 10px;
       object-fit: cover;
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border);
     }
     .brand-title {
-      font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
       font-weight: 700;
       letter-spacing: 2.5px;
       color: var(--accent);
       line-height: 1;
     }
     .brand-sub {
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       letter-spacing: 2px;
       color: var(--text-muted);
       text-transform: uppercase;
       margin-top: 4px;
-      font-weight: 500;
+      font-weight: 600;
     }
 
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-toggle-btn {
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+    }
+    .theme-toggle-btn:active { transform: scale(0.9); }
+
     .save-indicator {
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
       gap: 6px;
       background: var(--card-subtle);
-      padding: 5px 12px;
+      padding: 6px 12px;
       border-radius: 20px;
-      font-weight: 500;
+      font-weight: 600;
+      border: 1px solid var(--border);
     }
     .save-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--success);
-      box-shadow: 0 0 5px var(--success);
+      box-shadow: 0 0 6px var(--success);
     }
 
     .container {
-      max-width: 860px;
+      max-width: 880px;
       margin: 0 auto;
       padding: 24px 18px;
     }
 
     /* Kategori Butonları */
     .section-title {
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       text-transform: uppercase;
       letter-spacing: 1.2px;
       color: var(--text-muted);
-      margin: 20px 0 12px 4px;
-      font-weight: 600;
+      margin: 22px 0 14px 4px;
+      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -137,128 +172,91 @@
     }
     .cat-btn {
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
       padding: 18px 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
     .cat-btn:hover {
-      transform: translateY(-2px);
       border-color: var(--accent);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     }
-    .cat-btn .icon { font-size: 1.8rem; }
-    .cat-btn .label { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .cat-btn .icon { font-size: 2rem; }
+    .cat-btn .label { font-size: 0.95rem; font-weight: 600; color: var(--text); }
 
-    /* Proje Listesi */
+    /* Proje Kartları */
     .project-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
+      border-radius: 14px;
+      padding: 18px 20px;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
     .project-card:hover {
       border-color: var(--accent);
-      box-shadow: var(--shadow-md);
       transform: translateY(-1px);
     }
     .proj-badge {
-      font-size: 0.65rem;
-      padding: 3px 9px;
-      border-radius: 12px;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 14px;
       background: var(--accent-soft);
       color: var(--accent);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-right: 8px;
+      margin-right: 10px;
     }
-    .proj-title { font-weight: 600; font-size: 1rem; color: var(--text); }
-    .proj-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 5px; }
+    .proj-title { font-weight: 700; font-size: 1.08rem; color: var(--text); }
+    .proj-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
 
-    /* Yedekleme Alanı (Alt Kısım) */
-    .backup-box {
-      margin-top: 35px;
-      padding: 16px;
-      background: var(--card-subtle);
-      border-radius: var(--radius);
-      border: 1px dashed var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .backup-text {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .backup-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .btn-subtle {
-      padding: 7px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .btn-subtle:hover { border-color: var(--accent); }
-
-    /* EDITÖR EKRANI */
+    /* Editör Sayfası */
     #editorView { display: none; }
-    
     .editor-header-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .btn-back {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
+      padding: 9px 16px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
     .btn-spark {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
-      background: linear-gradient(135deg, #fff, #fdfaf3);
-      border: 1px solid var(--accent);
+      padding: 9px 16px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--accent);
       border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
       color: var(--accent);
       cursor: pointer;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
 
     .editor-top-nav {
@@ -272,48 +270,47 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 9px 16px;
+      padding: 10px 18px;
       border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
+      font-size: 0.88rem;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
       transition: all 0.15s;
     }
     .tab-btn.active {
       background: var(--accent);
-      color: #FFF;
+      color: #FFFFFF;
       border-color: var(--accent);
-      font-weight: 600;
-      box-shadow: 0 3px 10px var(--accent-soft);
+      box-shadow: 0 2px 8px var(--accent-soft);
     }
 
-    /* Form Elemanları */
-    .form-group { margin-bottom: 18px; }
+    /* Form ve Okunaklı Alanlar */
+    .form-group { margin-bottom: 20px; }
     label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 600;
+      letter-spacing: 0.9px;
+      font-weight: 700;
     }
     input[type="text"], textarea {
       width: 100%;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
       color: var(--text);
-      padding: 13px 16px;
-      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      border-radius: 12px;
       font-family: inherit;
-      font-size: 0.95rem;
+      font-size: 1.02rem;
+      line-height: 1.6;
       outline: none;
-      transition: all 0.2s;
-      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     input[type="text"]:focus, textarea:focus {
-      border-color: var(--accent);
+      border-color: var(--border-focus);
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
@@ -321,87 +318,119 @@
     .stats-bar {
       display: flex;
       justify-content: flex-end;
-      gap: 14px;
-      font-size: 0.75rem;
+      gap: 16px;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      margin-bottom: 8px;
-      font-weight: 500;
+      margin-bottom: 10px;
+      font-weight: 600;
     }
-    .stats-bar span b { color: var(--accent); }
+    .stats-bar span b { color: var(--accent); font-weight: 700; }
     textarea.script-mode {
-      font-family: var(--font-mono);
-      line-height: 1.65;
-      font-size: 0.92rem;
-      background: #FAFBFD;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.75;
+      font-size: 1.02rem;
+      background: var(--input-bg);
     }
 
-    /* Karakter & Sahne Kartları */
+    /* Kart Yapıları */
     .sub-item-card {
       background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
       position: relative;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
     .remove-btn {
       position: absolute;
-      top: 12px;
-      right: 14px;
-      color: #9CA3AF;
+      top: 14px;
+      right: 16px;
+      color: var(--text-muted);
       background: transparent;
       border: none;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       cursor: pointer;
     }
     .remove-btn:hover { color: var(--danger); }
     .add-btn {
       width: 100%;
-      padding: 12px;
-      background: #FFFFFF;
+      padding: 14px;
+      background: var(--card-bg);
       border: 1.5px dashed var(--accent);
       color: var(--accent);
-      border-radius: var(--radius-sm);
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-top: 8px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-top: 10px;
       transition: all 0.15s;
     }
     .add-btn:hover { background: var(--accent-soft); }
 
-    /* Aksiyon Çubuğu */
+    /* Alt Aksiyonlar */
     .action-row {
       display: flex;
-      gap: 10px;
-      margin-top: 28px;
+      gap: 12px;
+      margin-top: 30px;
       flex-wrap: wrap;
     }
     .btn {
       flex: 1;
-      min-width: 140px;
-      padding: 13px;
-      border-radius: var(--radius-sm);
+      min-width: 150px;
+      padding: 14px;
+      border-radius: 12px;
       border: none;
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.92rem;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow);
     }
     .btn-wa { background: #25D366; color: #FFF; }
-    .btn-pdf { background: #374151; color: #FFF; }
-    .btn-danger { background: #FEF2F2; color: var(--danger); border: 1px solid #FCA5A5; }
+    .btn-pdf { background: #1F2937; color: #FFF; }
+    :root[data-theme="dark"] .btn-pdf { background: #E5E7EB; color: #111; }
+    .btn-danger { background: rgba(220, 38, 38, 0.1); color: var(--danger); border: 1px solid var(--danger); }
 
-    /* Kıvılcım / İlham Modal */
+    /* Yedek Kutusu */
+    .backup-box {
+      margin-top: 35px;
+      padding: 18px;
+      background: var(--card-bg);
+      border-radius: 14px;
+      border: 1.5px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: var(--shadow);
+    }
+    .backup-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .backup-actions { display: flex; gap: 8px; }
+    .btn-subtle {
+      padding: 8px 16px;
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* İlham Modalı */
     .spark-modal {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(4px);
       display: none;
       align-items: center;
@@ -410,37 +439,37 @@
       padding: 20px;
     }
     .spark-card {
-      background: #FFF;
-      padding: 24px;
-      border-radius: var(--radius);
-      max-width: 460px;
+      background: var(--card-bg);
+      padding: 26px;
+      border-radius: 16px;
+      max-width: 480px;
       width: 100%;
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow);
       text-align: center;
     }
     .spark-card h3 {
-      font-family: var(--font-serif);
+      font-family: 'Cinzel', serif;
       color: var(--accent);
-      margin-bottom: 12px;
-      font-size: 1.1rem;
+      margin-bottom: 14px;
+      font-size: 1.2rem;
     }
     .spark-card p {
-      font-size: 0.95rem;
-      line-height: 1.5;
+      font-size: 1.05rem;
+      line-height: 1.6;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       font-style: italic;
     }
 
-    /* Baskı / PDF Tasarımı */
+    /* Baskı / PDF */
     @media print {
       body { background: #fff !important; color: #000 !important; font-family: serif; }
       header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar { display: none !important; }
       #editorView { display: block !important; }
       .tab-content { display: block !important; margin-bottom: 30px; }
-      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; }
-      .sub-item-card { border: 1px solid #ccc !important; page-break-inside: avoid; margin-bottom: 15px; }
+      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; font-size: 11pt !important; }
+      .sub-item-card { border: 1px solid #ddd !important; page-break-inside: avoid; margin-bottom: 16px; }
       .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 25px; padding-bottom: 10px; }
       .print-header h1 { font-size: 24pt; margin: 0; font-family: 'Cinzel', serif; }
     }
@@ -458,15 +487,19 @@
         <div class="brand-sub">Tasarla · Üret · Yay</div>
       </div>
     </div>
-    <div class="save-indicator">
-      <span class="save-dot"></span>
-      <span id="saveStatus">Kayıtlı</span>
+    
+    <div class="header-right">
+      <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()" title="Temayı Değiştir">🌙</button>
+      <div class="save-indicator">
+        <span class="save-dot"></span>
+        <span id="saveStatus">Kayıtlı</span>
+      </div>
     </div>
   </header>
 
   <main class="container">
     
-    <!-- ANA SAYFA: Kategori ve Arşiv -->
+    <!-- ANA SAYFA -->
     <section id="homeView">
       <div class="section-title">Hemen Başla (Kıvılcım Yakala)</div>
       <div class="grid-categories">
@@ -494,10 +527,10 @@
       </div>
       <div id="projectList"></div>
 
-      <!-- JSON Arşiv & Cihaz Aktarım Alanı -->
+      <!-- JSON Arşiv Alanı -->
       <div class="backup-box">
         <div class="backup-text">
-          <b>Taşınabilir Arşiv:</b> Verilerinizi diğer cihazlarınıza (PC/Tablet) aktarabilir veya yedekleyebilirsiniz.
+          <b>Cihazlar Arası Aktarım:</b> Notlarınızı tablete veya bilgisayara taşımak için yedeği indirin ya da yükleyin.
         </div>
         <div class="backup-actions">
           <button class="btn-subtle" onclick="exportData()">💾 Yedeği İndir (JSON)</button>
@@ -507,10 +540,9 @@
       </div>
     </section>
 
-    <!-- PROJE EDİTÖRÜ -->
+    <!-- EDİTÖR EKRANI -->
     <section id="editorView">
       
-      <!-- Üst Navigasyon & Kıvılcım Zarı -->
       <div class="editor-header-bar">
         <button class="btn-back" onclick="goHome()">‹ Tüm Projelerim</button>
         <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım Yakala</button>
@@ -540,12 +572,12 @@
           <input type="text" id="pGenre" placeholder="Örn: 1970'ler, Yağmurlu Boğaz Kıyısı, Psikolojik Gerilim" oninput="autoSave()">
         </div>
         <div class="form-group">
-          <label>Logline (Tek Cümlelik Öz / Kim, Ne İstiyor, Engel Ne?)</label>
+          <label>Logline (Tek Cümlelik Kanca / Kim, Ne İstiyor, Engel Ne?)</label>
           <textarea id="pLogline" rows="3" placeholder="Emekli bir terzi, sandığında bulduğu eski bir kumaşın izini sürerken..." oninput="autoSave()"></textarea>
         </div>
         <div class="form-group">
           <label>Dramatik Çatışma & Alt Metin (Tema)</label>
-          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi anlatıyor? Karakterin içsel hesaplaşması ne?" oninput="autoSave()"></textarea>
+          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi fısıldıyor? Karakterin içsel hesaplaşması ne?" oninput="autoSave()"></textarea>
         </div>
       </div>
 
@@ -561,19 +593,19 @@
         <button class="add-btn" onclick="addScene()">+ Yeni Sahne Kartı Ekle</button>
       </div>
 
-      <!-- SEKME 4: Daktilo & Taslak Modu -->
+      <!-- SEKME 4: Daktilo Modu -->
       <div id="tab-draft" class="tab-content" style="display:none;">
         <div class="stats-bar">
           <span>Kelime: <b id="wordCount">0</b></span>
           <span>Tahmini Sayfa: <b id="pageCount">0</b></span>
-          <span>Süre: <b id="screenTime">~0 Dk</b></span>
+          <span>Ekran Süresi: <b id="screenTime">~0 Dk</b></span>
         </div>
         <div class="form-group">
           <textarea id="pDraft" class="script-mode" rows="18" placeholder="İÇ. ATÖLYE - GECE&#10;&#10;Masanın üzerinde tek bir gaz lambası yanmaktadır. Yağmur damlaları cama sertçe vurur..." oninput="handleDraftInput()"></textarea>
         </div>
       </div>
 
-      <!-- Alt İşlemler -->
+      <!-- Alt Aksiyon Çubuğu -->
       <div class="action-row">
         <button class="btn btn-wa" onclick="shareWhatsApp()">📱 WhatsApp'a Gönder</button>
         <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF / Yazdır</button>
@@ -583,24 +615,41 @@
 
   </main>
 
-  <!-- Yaratıcı Kıvılcım (Zar) Modalı -->
+  <!-- Kıvılcım (Zar) Modalı -->
   <div class="spark-modal" id="sparkModal" onclick="closeSpark(event)">
     <div class="spark-card" onclick="event.stopPropagation()">
       <h3>🎲 Yaratıcı Fısıltı</h3>
       <p id="sparkText">Beklenmedik bir misafir kapıyı çalar...</p>
-      <button class="btn-subtle" onclick="triggerSpark()" style="margin-right:8px;">Başka Bir Tane Fısılda</button>
+      <button class="btn-subtle" onclick="triggerSpark()" style="margin-right:8px;">Başka Fısılda</button>
       <button class="btn-subtle" onclick="document.getElementById('sparkModal').style.display='none'">Kapat</button>
     </div>
   </div>
 
   <script>
-    // --- VERİ MODELİ (Sıfır Kayıp Garantisi) ---
+    // --- TEMA YÖNETİMİ (GECE / GÜNDÜZ) ---
+    const THEME_KEY = 'TUY_USER_THEME';
+    let currentTheme = localStorage.getItem(THEME_KEY) || 'light';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeBtn').innerText = theme === 'dark' ? '☀️' : '🌙';
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#111114' : '#F8F9FA');
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    function toggleTheme() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(currentTheme);
+    }
+
+    applyTheme(currentTheme);
+
+    // --- VERİ MODELİ VE DEPOLAMA ---
     const STORAGE_KEY = 'TUY_DATA_STORE_V2';
     let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [] };
     let currentProjId = null;
     let saveTimeout = null;
 
-    // Yaratıcı Zar Havuzu
     const sparks = [
       "Karakter doğruyu söylerse hayatı geri dönülmez şekilde değişecektir.",
       "Mekanda elektrikler aniden kesilir veya tek ışık kaynağı söner.",
@@ -685,9 +734,8 @@
       renderCharacters();
       renderScenes();
 
-      // Varsayılan sekmeye dön
-      const firstTabBtn = document.querySelector('.tab-btn');
-      switchTab(firstTabBtn, 'tab-core');
+      const firstTab = document.querySelector('.tab-btn');
+      switchTab(firstTab, 'tab-core');
 
       document.getElementById('homeView').style.display = 'none';
       document.getElementById('editorView').style.display = 'block';
@@ -700,7 +748,7 @@
       document.getElementById('totalCount').innerText = `${appData.projects.length} Proje`;
 
       if (appData.projects.length === 0) {
-        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:35px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçerek başlayın!</p>';
+        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding:35px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçerek başlayın!</p>';
         return;
       }
 
@@ -714,16 +762,16 @@
               <span class="proj-badge">${p.type}</span>
               <span class="proj-title">${p.title || 'İsimsiz Taslak'}</span>
             </div>
-            <div class="proj-date">Son güncelleme: ${dateStr}</div>
+            <div class="proj-date">Son dokunuş: ${dateStr}</div>
           </div>
-          <span style="color:var(--accent); font-size:1.3rem;">›</span>
+          <span style="color:var(--accent); font-size:1.3rem; font-weight:700;">›</span>
         `;
         card.onclick = () => openProject(p.id);
         listEl.appendChild(card);
       });
     }
 
-    // --- SEKME VE İSTATİSTİKLER ---
+    // --- SEKME VE SAYAC ---
     function switchTab(btn, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -739,8 +787,8 @@
 
     function calculateStats(text) {
       const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      const pages = (words / 220).toFixed(1); // 1 sayfa senaryo ortalama 200-250 kelimedir
-      const minutes = Math.round(words / 200); // 1 sayfa = ~1 dakika
+      const pages = (words / 220).toFixed(1);
+      const minutes = Math.round(words / 200);
 
       document.getElementById('wordCount').innerText = words;
       document.getElementById('pageCount').innerText = pages > 0 ? pages : 0;
@@ -758,20 +806,20 @@
         div.className = 'sub-item-card';
         div.innerHTML = `
           <button class="remove-btn" onclick="removeCharacter(${index})">✕</button>
-          <div class="form-group" style="margin-bottom:8px;">
+          <div class="form-group" style="margin-bottom:10px;">
             <label>Karakter Adı & Yaşı</label>
             <input type="text" value="${char.name || ''}" placeholder="Örn: Sevim Hanım (54)" oninput="updateChar(${index}, 'name', this.value)">
           </div>
-          <div class="form-group" style="margin-bottom:8px;">
+          <div class="form-group" style="margin-bottom:10px;">
             <label>Dramatik Hedef (Ne İstiyor?)</label>
             <input type="text" value="${char.goal || ''}" placeholder="Örn: Kızının mektuplarını bulmak" oninput="updateChar(${index}, 'goal', this.value)">
           </div>
-          <div class="form-group" style="margin-bottom:8px;">
+          <div class="form-group" style="margin-bottom:10px;">
             <label>Zaaf / Gizli Sır</label>
             <input type="text" value="${char.flaw || ''}" placeholder="Örn: Unutmaktan delicesine korkuyor" oninput="updateChar(${index}, 'flaw', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:0;">
-            <label>Kostüm, Aksesuar ve Tavır</label>
+            <label>Kostüm, Aksesuar ve Belirgin Tavır</label>
             <textarea rows="2" placeholder="Boynunda inci kolye, titreyen eller..." oninput="updateChar(${index}, 'notes', this.value)">${char.notes || ''}</textarea>
           </div>
         `;
@@ -811,11 +859,11 @@
         div.className = 'sub-item-card';
         div.innerHTML = `
           <button class="remove-btn" onclick="removeScene(${index})">✕</button>
-          <div class="form-group" style="margin-bottom:8px;">
+          <div class="form-group" style="margin-bottom:10px;">
             <label>Sahne ${index + 1}: Başlık & Mekan (İÇ/DIŞ - ZAMAN)</label>
             <input type="text" value="${scene.slug || ''}" placeholder="Örn: İÇ. TERZİHANE - AKŞAMÜSTÜ" oninput="updateScene(${index}, 'slug', this.value)">
           </div>
-          <div class="form-group" style="margin-bottom:8px;">
+          <div class="form-group" style="margin-bottom:10px;">
             <label>Olay Örgüsü (Ne Yaşanıyor?)</label>
             <textarea rows="2" placeholder="Sandık açılır, tozlu mektuplar ortaya çıkar..." oninput="updateScene(${index}, 'action', this.value)">${scene.action || ''}</textarea>
           </div>
@@ -931,7 +979,6 @@
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
-    // Başlangıç Yüklemesi
     renderProjectList();
 
     if ('serviceWorker' in navigator) {
