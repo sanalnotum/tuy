@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TÜY | Tasarla · Üret · Yay</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e1e24">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="logo.png">
+
+  <!-- Google Fonts: Inter & JetBrains Mono (Senaryo Daktilo Hissi) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #141418;
+      --card-bg: #1e1e24;
+      --card-hover: #26262e;
+      --border: #2e2e38;
+      --accent: #d4af37; /* Asil altın/tüy tınısı */
+      --accent-glow: rgba(212, 175, 55, 0.2);
+      --text: #f0f0f3;
+      --text-muted: #9e9ea7;
+      --danger: #e65050;
+      --success: #34c759;
+      --radius: 14px;
+      --font-main: 'Inter', sans-serif;
+      --font-serif: 'Cinzel', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* Üst Bar */
+    header {
+      background: rgba(20, 20, 24, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--accent);
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .save-indicator {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .save-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+    }
+
+    /* Ana Sayfa: Kategori Kartları */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin: 20px 0 12px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .grid-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .cat-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text);
+    }
+    .cat-btn:hover, .cat-btn:active {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: var(--card-hover);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .cat-btn .icon { font-size: 1.8rem; }
+    .cat-btn .label { font-size: 0.85rem; font-weight: 500; text-align: center; }
+
+    /* Proje Listesi */
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .project-card:hover { background: var(--card-hover); border-color: #3f3f4c; }
+    .proj-badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: #2b2b36;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+    .proj-title { font-weight: 600; font-size: 0.95rem; }
+    .proj-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Proje Editör Ekranı */
+    #editorView { display: none; }
+    .editor-top-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="text"]:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+    textarea.script-mode {
+      font-family: var(--font-mono);
+      line-height: 1.6;
+      font-size: 0.9rem;
+      background: #111115;
+    }
+
+    /* Karakter & Sahne Kartları */
+    .sub-item-card {
+      background: #191920;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .remove-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: var(--danger);
+      background: transparent;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .add-btn {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px dashed var(--accent);
+      color: var(--accent);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* Paylaşım & Aksiyon Barı */
+    .action-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-wa { background: #25D366; color: #fff; }
+    .btn-pdf { background: #e0e0e0; color: #111; }
+    .btn-danger { background: rgba(230, 80, 80, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+
+    /* Yalnızca Yazdırma / PDF Modu Stili */
+    @media print {
+      body { background: #fff !important; color: #000 !important; font-family: serif; }
+      header, .editor-top-nav, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView { display: none !important; }
+      #editorView { display: block !important; }
+      .tab-content { display: block !important; margin-bottom: 30px; }
+      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; }
+      .sub-item-card { border: 1px solid #ccc !important; background: #fff !important; page-break-inside: avoid; }
+      .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 20px; padding-bottom: 10px; }
+      .print-header h1 { font-size: 24pt; margin: 0; font-family: 'Cinzel', serif; }
+    }
+    .print-header { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Üst Başlık & Menü -->
+  <header>
+    <div class="brand" onclick="goHome()">
+      <!-- Logonuz buraya gelecek -->
+      <img src="logo.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23d4af37\'><text y=\'75\' font-size=\'75\'>🪶</text></svg>'" alt="TÜY Logo">
+      <div>
+        <div class="brand-title">TÜY</div>
+        <div class="brand-sub">Tasarla · Üret · Yay</div>
+      </div>
+    </div>
+    <div class="save-indicator">
+      <span class="save-dot"></span>
+      <span id="saveStatus">Kayıtlı</span>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- ANA SAYFA: Kategori Seçimi ve Arşiv -->
+    <section id="homeView">
+      <div class="section-title">Hemen Başla (Kıvılcım Yakala)</div>
+      <div class="grid-categories">
+        <div class="cat-btn" onclick="createNewProject('Kısa Film')">
+          <span class="icon">🎬</span>
+          <span class="label">Kısa Film</span>
+        </div>
+        <div class="cat-btn" onclick="createNewProject('Senaryo')">
+          <span class="icon">🎞️</span>
+          <span class="label">Senaryo / Dizi</span>
+        </div>
+        <div class="cat-btn" onclick="createNewProject('Öykü')">
+          <span class="icon">📖</span>
+          <span class="label">Hikaye / Öykü</span>
+        </div>
+        <div class="cat-btn" onclick="createNewProject('Hızlı Fikir')">
+          <span class="icon">⚡</span>
+          <span class="label">Fikir Kıvılcımı</span>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <span>Kayıtlı Çalışmalarım</span>
+        <span id="totalCount" style="font-size:0.75rem; color:var(--accent);">0 Proje</span>
+      </div>
+      <div id="projectList">
+        <!-- Projeler Dinamik Yüklenecek -->
+      </div>
+    </section>
+
+    <!-- PROJE EDİTÖRÜ -->
+    <section id="editorView">
+      <div class="print-header">
+        <h1 id="printTitle">Proje Adı</h1>
+        <p id="printMeta">TÜY Yaratıcı Yazarlık Arşivi</p>
+      </div>
+
+      <!-- Sekme Barı -->
+      <div class="editor-top-nav">
+        <button class="tab-btn active" onclick="switchTab('tab-core')">🎯 Temel Fikir & Logline</button>
+        <button class="tab-btn" onclick="switchTab('tab-characters')">🎭 Karakterler</button>
+        <button class="tab-btn" onclick="switchTab('tab-scenes')">📑 Sahne Kartları</button>
+        <button class="tab-btn" onclick="switchTab('tab-draft')">🖋️ Taslak & Diyalog</button>
+      </div>
+
+      <!-- SEKME 1: Çekirdek Fikir -->
+      <div id="tab-core" class="tab-content">
+        <div class="form-group">
+          <label>Çalışma Başlığı</label>
+          <input type="text" id="pTitle" placeholder="Örn: Sessizliğin Rengi" oninput="autoSave()">
+        </div>
+        <div class="form-group">
+          <label>Tür & Dönem / Atmosfer</label>
+          <input type="text" id="pGenre" placeholder="Örn: Psikolojik Dram, 1970'ler İstanbul, Yağmurlu Sonbahar" oninput="autoSave()">
+        </div>
+        <div class="form-group">
+          <label>Logline (Tek Cümlelik Kanca / Kim, Ne İstiyor, Engel Ne?)</label>
+          <textarea id="pLogline" rows="3" placeholder="Geçmişiyle yüzleşmekten korkan bir saat ustası..." oninput="autoSave()"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Dramatik Çatışma & Alt Metin (Tema)</label>
+          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi anlatıyor? Karakterin içsel yolculuğu ne?" oninput="autoSave()"></textarea>
+        </div>
+      </div>
+
+      <!-- SEKME 2: Karakterler -->
+      <div id="tab-characters" class="tab-content" style="display:none;">
+        <div id="characterList"></div>
+        <button class="add-btn" onclick="addCharacter()">+ Yeni Karakter Ekle</button>
+      </div>
+
+      <!-- SEKME 3: Sahne Kartları -->
+      <div id="tab-scenes" class="tab-content" style="display:none;">
+        <div id="sceneList"></div>
+        <button class="add-btn" onclick="addScene()">+ Yeni Sahne Kartı Ekle</button>
+      </div>
+
+      <!-- SEKME 4: Serbest Taslak & Diyalog (Daktilo Modu) -->
+      <div id="tab-draft" class="tab-content" style="display:none;">
+        <div class="form-group">
+          <label>Senaryo Taslağı / Serbest Metin (Daktilo Formatı)</label>
+          <textarea id="pDraft" class="script-mode" rows="18" placeholder="İÇ. ÇALIŞMA ODASI - GECE&#10;&#10;Masanın üzerinde tek bir mum yanmaktadır..." oninput="autoSave()"></textarea>
+        </div>
+      </div>
+
+      <!-- Alt Aksiyonlar: WhatsApp, PDF ve Silme -->
+      <div class="action-row">
+        <button class="btn btn-wa" onclick="shareWhatsApp()">📱 WhatsApp'a Gönder</button>
+        <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF Olarak İndir / Yazdır</button>
+        <button class="btn btn-danger" onclick="deleteCurrentProject()">🗑️ Projeyi Sil</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // --- VERİ MODELİ VE YEREL DEPOLAMA (ASLA KAYBOLMAZ) ---
+    const STORAGE_KEY = 'TUY_APP_DATA_V1';
+    let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [] };
+    let currentProjId = null;
+    let saveTimeout = null;
+
+    function persist() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+      const dot = document.getElementById('saveStatus');
+      dot.innerText = 'Kayıt Edildi';
+      setTimeout(() => { dot.innerText = 'Kayıtlı'; }, 1200);
+    }
+
+    function autoSave() {
+      const dot = document.getElementById('saveStatus');
+      dot.innerText = 'Kaydediliyor...';
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        const proj = appData.projects.find(p => p.id === currentProjId);
+        if (!proj) return;
+
+        proj.title = document.getElementById('pTitle').value || 'İsimsiz Taslak';
+        proj.genre = document.getElementById('pGenre').value;
+        proj.logline = document.getElementById('pLogline').value;
+        proj.theme = document.getElementById('pTheme').value;
+        proj.draft = document.getElementById('pDraft').value;
+        proj.updatedAt = new Date().toISOString();
+
+        persist();
+      }, 400);
+    }
+
+    // --- NAVİGASYON ---
+    function goHome() {
+      currentProjId = null;
+      document.getElementById('editorView').style.display = 'none';
+      document.getElementById('homeView').style.display = 'block';
+      renderProjectList();
+    }
+
+    function createNewProject(type) {
+      const newProj = {
+        id: 'tuy_' + Date.now(),
+        type: type,
+        title: '',
+        genre: '',
+        logline: '',
+        theme: '',
+        draft: '',
+        characters: [],
+        scenes: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      appData.projects.unshift(newProj);
+      persist();
+      openProject(newProj.id);
+    }
+
+    function openProject(id) {
+      currentProjId = id;
+      const proj = appData.projects.find(p => p.id === id);
+      if (!proj) return;
+
+      document.getElementById('pTitle').value = proj.title || '';
+      document.getElementById('pGenre').value = proj.genre || '';
+      document.getElementById('pLogline').value = proj.logline || '';
+      document.getElementById('pTheme').value = proj.theme || '';
+      document.getElementById('pDraft').value = proj.draft || '';
+
+      document.getElementById('printTitle').innerText = proj.title || 'İsimsiz Taslak';
+      document.getElementById('printMeta').innerText = `${proj.type} · ${proj.genre || ''}`;
+
+      renderCharacters();
+      renderScenes();
+      switchTab('tab-core');
+
+      document.getElementById('homeView').style.display = 'none';
+      document.getElementById('editorView').style.display = 'block';
+      window.scrollTo(0,0);
+    }
+
+    function renderProjectList() {
+      const listEl = document.getElementById('projectList');
+      listEl.innerHTML = '';
+      document.getElementById('totalCount').innerText = `${appData.projects.length} Proje`;
+
+      if (appData.projects.length === 0) {
+        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:30px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçip başlayın!</p>';
+        return;
+      }
+
+      appData.projects.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+        const dateStr = new Date(p.updatedAt).toLocaleDateString('tr-TR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+        card.innerHTML = `
+          <div>
+            <div>
+              <span class="proj-badge">${p.type}</span>
+              <span class="proj-title">${p.title || 'İsimsiz Taslak'}</span>
+            </div>
+            <div class="proj-date">Son dokunuş: ${dateStr}</div>
+          </div>
+          <span style="color:var(--accent); font-size:1.2rem;">›</span>
+        `;
+        card.onclick = () => openProject(p.id);
+        listEl.appendChild(card);
+      });
+    }
+
+    // --- SEKME DEĞİŞİMİ ---
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active');
+    }
+
+    // --- KARAKTER YÖNETİMİ ---
+    function renderCharacters() {
+      const container = document.getElementById('characterList');
+      container.innerHTML = '';
+      const proj = appData.projects.find(p => p.id === currentProjId);
+
+      proj.characters.forEach((char, index) => {
+        const div = document.createElement('div');
+        div.className = 'sub-item-card';
+        div.innerHTML = `
+          <button class="remove-btn" onclick="removeCharacter(${index})">✕</button>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Karakter Adı & Yaşı</label>
+            <input type="text" value="${char.name || ''}" placeholder="Örn: Selim (42)" oninput="updateChar(${index}, 'name', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Dramatik Arzu & Hedef (Ne İstiyor?)</label>
+            <input type="text" value="${char.goal || ''}" placeholder="Örn: Saat kulesini tamir etmek" oninput="updateChar(${index}, 'goal', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>İç Çatışma / Zaaf / Gizli Sırrı</label>
+            <input type="text" value="${char.flaw || ''}" placeholder="Örn: Yalan söyleyemez ama gerçeği saklar" oninput="updateChar(${index}, 'flaw', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Kostüm / Aksesuar / Belirgin Tavır</label>
+            <textarea rows="2" placeholder="Sürekli eski bir köstekli saati tutar..." oninput="updateChar(${index}, 'notes', this.value)">${char.notes || ''}</textarea>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addCharacter() {
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.characters.push({ name:'', goal:'', flaw:'', notes:'' });
+      persist();
+      renderCharacters();
+    }
+
+    function updateChar(index, field, val) {
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.characters[index][field] = val;
+      autoSave();
+    }
+
+    function removeCharacter(index) {
+      if (!confirm('Bu karakteri silmek istediğinizden emin misiniz?')) return;
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.characters.splice(index, 1);
+      persist();
+      renderCharacters();
+    }
+
+    // --- SAHNE KARTLARI YÖNETİMİ ---
+    function renderScenes() {
+      const container = document.getElementById('sceneList');
+      container.innerHTML = '';
+      const proj = appData.projects.find(p => p.id === currentProjId);
+
+      proj.scenes.forEach((scene, index) => {
+        const div = document.createElement('div');
+        div.className = 'sub-item-card';
+        div.innerHTML = `
+          <button class="remove-btn" onclick="removeScene(${index})">✕</button>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Sahne ${index + 1}: Başlık & Mekan (İÇ/DIŞ - GÜN/GECE)</label>
+            <input type="text" value="${scene.slug || ''}" placeholder="Örn: İÇ. ATÖLYE - GECE" oninput="updateScene(${index}, 'slug', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Olay Örgüsü / Sahnede Ne Oluyor?</label>
+            <textarea rows="2" placeholder="Selim eski defteri açar ve kilitli bir mektup bulur..." oninput="updateScene(${index}, 'action', this.value)">${scene.action || ''}</textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Duygusal Dönüm Noktası</label>
+            <input type="text" value="${scene.beat || ''}" placeholder="Örn: Şüphe yerini kesin bir karara bırakır" oninput="updateScene(${index}, 'beat', this.value)">
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addScene() {
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.scenes.push({ slug:'', action:'', beat:'' });
+      persist();
+      renderScenes();
+    }
+
+    function updateScene(index, field, val) {
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.scenes[index][field] = val;
+      autoSave();
+    }
+
+    function removeScene(index) {
+      if (!confirm('Bu sahne kartını silmek istediğinizden emin misiniz?')) return;
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      proj.scenes.splice(index, 1);
+      persist();
+      renderScenes();
+    }
+
+    function deleteCurrentProject() {
+      if (!confirm('Bu projeyi tamamen silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) return;
+      appData.projects = appData.projects.filter(p => p.id !== currentProjId);
+      persist();
+      goHome();
+    }
+
+    // --- WHATSAPP İLE ARŞİVİ KENDİNE ATMA ---
+    function shareWhatsApp() {
+      const proj = appData.projects.find(p => p.id === currentProjId);
+      if (!proj) return;
+
+      let msg = `🪶 *TÜY - TASARLA ÜRET YAY*\n`;
+      msg += `📂 *Proje:* ${proj.title || 'İsimsiz Taslak'} (${proj.type})\n`;
+      if (proj.genre) msg += `📍 *Tür/Atmosfer:* ${proj.genre}\n`;
+      if (proj.logline) msg += `\n🎯 *Logline:*\n${proj.logline}\n`;
+      if (proj.theme) msg += `\n💡 *Tema/Çatışma:*\n${proj.theme}\n`;
+
+      if (proj.characters.length > 0) {
+        msg += `\n🎭 *KARAKTERLER:*\n`;
+        proj.characters.forEach(c => {
+          msg += `• *${c.name || 'Karakter'}*: Arzu: ${c.goal || '-'} | Zaaf: ${c.flaw || '-'}\n`;
+        });
+      }
+
+      if (proj.scenes.length > 0) {
+        msg += `\n📑 *SAHNE AKIŞI:*\n`;
+        proj.scenes.forEach((s, idx) => {
+          msg += `${idx + 1}. *${s.slug || 'Sahne'}*: ${s.action || ''}\n`;
+        });
+      }
+
+      if (proj.draft) {
+        msg += `\n🖋️ *TASLAK / DİYALOG:*\n${proj.draft}\n`;
+      }
+
+      const encoded = encodeURIComponent(msg);
+      window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+    }
+
+    // --- BAŞLANGIÇ ÇAĞRISI ---
+    renderProjectList();
+
+    // PWA Service Worker Kaydı
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
