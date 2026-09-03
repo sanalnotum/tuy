@@ -10,16 +10,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Google Fonts: Cinzel, Plus Jakarta Sans, JetBrains Mono, Merriweather -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Word (.docx) Okuyucu Kütüphanesi -->
+  <!-- Word (.docx) Okuyucu -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
   <style>
-    /* --- RENK VE TEMA PALETİ --- */
+    /* --- RENK VE TEMA DEĞİŞKENLERİ --- */
     :root[data-theme="light"] {
       --bg: #F8F9FA;
       --card-bg: #FFFFFF;
@@ -67,72 +67,79 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Üst Bar */
+    /* --- ÜST BAR (SİMETRİK 3'LÜ KOLON DÜZENİ) --- */
     header {
       background: var(--card-bg);
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border);
-      padding: 12px 20px;
-      display: flex;
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
       box-shadow: var(--shadow);
     }
-    .brand {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: flex-start;
+      gap: 10px;
+    }
+    .header-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       cursor: pointer;
     }
-    .brand img {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid var(--border);
+    .brand-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .brand-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 3px;
       color: var(--accent);
       line-height: 1;
     }
     .brand-sub {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       letter-spacing: 2px;
       color: var(--text-muted);
       text-transform: uppercase;
       margin-top: 4px;
       font-weight: 600;
     }
-
     .header-right {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 10px;
     }
+
     .theme-toggle-btn {
       background: var(--card-subtle);
       border: 1px solid var(--border);
       color: var(--text);
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       transition: transform 0.2s;
     }
     .theme-toggle-btn:active { transform: scale(0.9); }
 
     .save-indicator {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -144,8 +151,8 @@
       border: 1px solid var(--border);
     }
     .save-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--success);
       box-shadow: 0 0 6px var(--success);
@@ -239,29 +246,25 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 9px 16px;
+      padding: 8px 16px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--text);
       cursor: pointer;
       box-shadow: var(--shadow);
     }
-    .header-actions {
-      display: flex;
-      gap: 8px;
-    }
     .btn-spark {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 9px 16px;
+      padding: 8px 16px;
       background: var(--card-bg);
       border: 1.5px solid var(--accent);
       border-radius: 20px;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--accent);
       cursor: pointer;
@@ -294,8 +297,8 @@
       box-shadow: 0 2px 8px var(--accent-soft);
     }
 
-    /* Form ve Okunaklı Alanlar */
-    .form-group { margin-bottom: 20px; }
+    /* Form ve Alanlar */
+    .form-group { margin-bottom: 20px; position: relative; }
     label {
       display: block;
       font-size: 0.82rem;
@@ -323,7 +326,7 @@
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
-    /* --- AMERİKAN TİPİ SENARYO & KİTAP ARAÇ ÇUBUĞU --- */
+    /* --- AMERİKAN TİPİ SENARYO ARAÇ ÇUBUĞU --- */
     .script-toolbar {
       display: flex;
       gap: 6px;
@@ -333,6 +336,7 @@
       background: var(--card-subtle);
       border: 1px solid var(--border);
       border-radius: 12px;
+      align-items: center;
     }
     .tool-btn {
       padding: 6px 12px;
@@ -351,12 +355,37 @@
       color: var(--accent);
     }
 
+    /* Karakter Hızlı Seçim Hapları (@ Barı) */
+    .char-chips-bar {
+      display: none;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      background: var(--accent-soft);
+      border: 1px dashed var(--accent);
+      border-radius: 10px;
+      overflow-x: auto;
+      align-items: center;
+    }
+    .char-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
     /* Senaryo vs Roman Görünüm Alanı */
     textarea.mode-screenplay {
       font-family: 'JetBrains Mono', monospace;
       line-height: 1.7;
       font-size: 1rem;
       background: var(--script-bg);
+      white-space: pre;
     }
     textarea.mode-novel {
       font-family: 'Merriweather', serif;
@@ -441,7 +470,7 @@
     :root[data-theme="dark"] .btn-pdf { background: #E5E7EB; color: #111; }
     .btn-danger { background: rgba(220, 38, 38, 0.1); color: var(--danger); border: 1px solid var(--danger); }
 
-    /* Yedek & Word Yükleme Kutusu */
+    /* Yedek & Word Kutusu */
     .backup-box {
       margin-top: 35px;
       padding: 18px;
@@ -511,7 +540,7 @@
     /* Amerikan Standartlarında Senaryo Baskısı (PDF) */
     @media print {
       body { background: #fff !important; color: #000 !important; }
-      header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar, .script-toolbar { display: none !important; }
+      header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar, .script-toolbar, .char-chips-bar { display: none !important; }
       #editorView { display: block !important; }
       .tab-content { display: block !important; margin-bottom: 30px; }
       input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; }
@@ -526,13 +555,16 @@
 </head>
 <body>
 
-  <!-- Üst Bar -->
+  <!-- ÜST BAR: SİMETRİK TAM MERKEZ -->
   <header>
-    <div class="brand" onclick="goHome()">
-      <img src="logo.png" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%23B89748\'><text y=\'75\' font-size=\'75\'>🪶</text></svg>'" alt="TÜY Logo">
-      <div>
+    <div class="header-left">
+      <!-- Mobilde gerekirse kullanılabilir -->
+    </div>
+    
+    <div class="header-center" onclick="goHome()">
+      <div class="brand-box">
         <div class="brand-title">TÜY</div>
-        <div class="brand-sub">Tasarla · Üret · Yay</div>
+        <div class="brand-sub">TASARLA · ÜRET · YAY</div>
       </div>
     </div>
     
@@ -578,7 +610,7 @@
       <!-- Dışa/İçe Aktar & Word Belgesi Yükleme -->
       <div class="backup-box">
         <div class="backup-text">
-          <b>Dışa & İçe Aktar:</b> Word (.docx) belgelerinizi aktarabilir veya yedek alabilirsiniz.
+          <b>Dışa & İçe Aktar:</b> Word (.docx) belgelerinizi aktarabilir veya cihazlar arası yedek alabilirsiniz.
         </div>
         <div class="backup-actions">
           <button class="btn-subtle" onclick="document.getElementById('docFileInput').click()">📄 Word Dosyası Aç (.docx)</button>
@@ -595,9 +627,7 @@
       
       <div class="editor-header-bar">
         <button class="btn-back" onclick="goHome()">‹ Tüm Projelerim</button>
-        <div class="header-actions">
-          <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım</button>
-        </div>
+        <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım</button>
       </div>
 
       <div class="print-header">
@@ -645,27 +675,32 @@
         <button class="add-btn" onclick="addScene()">+ Yeni Sahne Kartı Ekle</button>
       </div>
 
-      <!-- SEKME 4: Daktilo & Yazım Modu (Çift Motorlu) -->
+      <!-- SEKME 4: Daktilo & Yazım Modu (Çift Motorlu + Tab/Enter Zekası) -->
       <div id="tab-draft" class="tab-content" style="display:none;">
         
-        <!-- Canlı İstatistikler -->
         <div class="stats-bar">
           <span>Kelime: <b id="wordCount">0</b></span>
           <span>Tahmini Sayfa: <b id="pageCount">0</b></span>
           <span>Ekran Süresi: <b id="screenTime">~0 Dk</b></span>
         </div>
 
-        <!-- Amerikan Senaryo Hızlı Araç Çubuğu (Senaryo / Kısa Film için) -->
+        <!-- Amerikan Senaryo Araç Çubuğu -->
         <div class="script-toolbar" id="scriptToolbar">
-          <button class="tool-btn" onclick="insertScriptTag('SCENE')">🎬 Sahne Başlığı</button>
-          <button class="tool-btn" onclick="insertScriptTag('CHARACTER')">👤 Karakter</button>
+          <button class="tool-btn" onclick="insertScriptTag('SCENE')">🎬 Sahne</button>
+          <button class="tool-btn" onclick="insertScriptTag('CHARACTER')">👤 Karakter (Tab)</button>
           <button class="tool-btn" onclick="insertScriptTag('PAREN')">( ) Parantez</button>
           <button class="tool-btn" onclick="insertScriptTag('DIALOGUE')">💬 Diyalog</button>
           <button class="tool-btn" onclick="insertScriptTag('ACTION')">🏃 Aksiyon</button>
         </div>
 
+        <!-- @ ile Karakter Çağırma Çubuğu -->
+        <div class="char-chips-bar" id="charChipsBar">
+          <span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Karakteri Sahneye Al:</span>
+          <div id="charChipsContainer" style="display:flex; gap:6px;"></div>
+        </div>
+
         <div class="form-group">
-          <textarea id="pDraft" class="mode-screenplay" rows="18" placeholder="Metninizi buraya yazın..." oninput="handleDraftTyping()"></textarea>
+          <textarea id="pDraft" class="mode-screenplay" rows="18" placeholder="Metninizi buraya yazın..." oninput="handleDraftTyping(event)" onkeydown="handleScriptKeyDown(event)"></textarea>
         </div>
       </div>
 
@@ -708,7 +743,7 @@
     applyTheme(currentTheme);
 
     // --- VERİ MODELİ VE DEPOLAMA ---
-    const STORAGE_KEY = 'TUY_DATA_STORE_V3';
+    const STORAGE_KEY = 'TUY_DATA_STORE_V4';
     let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [] };
     let currentProject = null;
     let saveTimeout = null;
@@ -733,8 +768,7 @@
       setTimeout(() => { dot.innerText = 'Kayıtlı'; }, 1000);
     }
 
-    // --- HAYALET TASLAKLARI ÖNLEME MEKANİZMASI ---
-    // Yazar gerçekten bir şey yazdı mı kontrol eder
+    // Hayalet Taslak Önleme
     function hasRealContent(proj) {
       if (!proj) return false;
       const hasTitle = proj.title && proj.title.trim() !== '' && proj.title !== 'İsimsiz Taslak';
@@ -761,7 +795,6 @@
         currentProject.draft = document.getElementById('pDraft').value;
         currentProject.updatedAt = new Date().toISOString();
 
-        // Eğer içerik girildiyse ve henüz listeye eklenmemişse şimdi ekle!
         if (hasRealContent(currentProject)) {
           const index = appData.projects.findIndex(p => p.id === currentProject.id);
           if (index === -1) {
@@ -778,15 +811,103 @@
       autoSave();
     }
 
-    function handleDraftTyping() {
-      const text = document.getElementById('pDraft').value;
+    // --- SENARYO DAKTYLO MOTORU (TAB & ENTER & @ ZEKASI) ---
+    function handleDraftTyping(e) {
+      const ta = document.getElementById('pDraft');
+      const text = ta.value;
       calculateStats(text);
       autoSave();
+
+      // @ karakter kontrolü
+      const cursor = ta.selectionStart;
+      const lastChar = text[cursor - 1];
+      const chipsBar = document.getElementById('charChipsBar');
+      
+      if (lastChar === '@') {
+        renderCharChips();
+      } else if (!text.slice(Math.max(0, cursor - 15), cursor).includes('@')) {
+        chipsBar.style.display = 'none';
+      }
     }
 
-    // --- PROJE YÖNETİMİ ---
+    function handleScriptKeyDown(e) {
+      if (!currentProject || currentProject.type === 'Öykü') return;
+
+      const ta = e.target;
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const text = ta.value;
+
+      // 1. TAB TUŞU ZEKASI -> Karakter Girintisine Git
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const charIndent = '                    '; // 20 Karakter boşluk (Hollywood standardı)
+        ta.value = text.substring(0, start) + charIndent + text.substring(end);
+        ta.selectionStart = ta.selectionEnd = start + charIndent.length;
+        handleDraftTyping();
+        return;
+      }
+
+      // 2. ENTER TUŞU ZEKASI -> Karakterden Sonra Otomatik Diyalog Girintisi
+      if (e.key === 'Enter') {
+        const lineStart = text.lastIndexOf('\n', start - 1) + 1;
+        const currentLine = text.substring(lineStart, start);
+
+        // Eğer mevcut satır Karakter Girintisiyle başlıyorsa (20 boşluk)
+        if (currentLine.startsWith('                    ')) {
+          e.preventDefault();
+          const dialogueIndent = '\n          '; // 10 Karakter boşluk (Diyalog girintisi)
+          ta.value = text.substring(0, start) + dialogueIndent + text.substring(end);
+          ta.selectionStart = ta.selectionEnd = start + dialogueIndent.length;
+          handleDraftTyping();
+          return;
+        }
+      }
+    }
+
+    // @ Karakter Çağırma
+    function renderCharChips() {
+      const container = document.getElementById('charChipsContainer');
+      const chipsBar = document.getElementById('charChipsBar');
+      container.innerHTML = '';
+
+      if (!currentProject.characters || currentProject.characters.length === 0) {
+        chipsBar.style.display = 'none';
+        return;
+      }
+
+      currentProject.characters.forEach(char => {
+        if (!char.name) return;
+        const chip = document.createElement('span');
+        chip.className = 'char-chip';
+        chip.innerText = char.name.toUpperCase();
+        chip.onclick = () => insertCharacterFromChip(char.name.toUpperCase());
+        container.appendChild(chip);
+      });
+
+      chipsBar.style.display = 'flex';
+    }
+
+    function insertCharacterFromChip(charName) {
+      const ta = document.getElementById('pDraft');
+      const text = ta.value;
+      const cursor = ta.selectionStart;
+
+      // Son @ işaretini bulup sil ve yerine Amerikan formatında yerleştir
+      const atIndex = text.lastIndexOf('@', cursor - 1);
+      const before = atIndex !== -1 ? text.substring(0, atIndex) : text.substring(0, cursor);
+      const after = text.substring(cursor);
+
+      const insertion = `\n\n                    ${charName}\n          `;
+      ta.value = before + insertion + after;
+      ta.selectionStart = ta.selectionEnd = before.length + insertion.length;
+      document.getElementById('charChipsBar').style.display = 'none';
+      ta.focus();
+      handleDraftTyping();
+    }
+
+    // --- PROJE BAŞLATMA VE AÇMA ---
     function startNewProject(type) {
-      // Geçici bir nesne oluştur, henüz appData.projects içine EKLEME!
       currentProject = {
         id: 'tuy_' + Date.now(),
         type: type,
@@ -806,7 +927,7 @@
     function openExistingProject(id) {
       const proj = appData.projects.find(p => p.id === id);
       if (!proj) return;
-      currentProject = JSON.parse(JSON.stringify(proj)); // kopya al
+      currentProject = JSON.parse(JSON.stringify(proj));
       openEditor(currentProject);
     }
 
@@ -820,7 +941,6 @@
       document.getElementById('printTitle').innerText = proj.title || 'İsimsiz Taslak';
       document.getElementById('printMeta').innerText = `${proj.type} · ${proj.genre || ''}`;
 
-      // Türe göre mod ayarla (Senaryo vs Roman)
       const draftArea = document.getElementById('pDraft');
       const scriptToolbar = document.getElementById('scriptToolbar');
       if (proj.type === 'Öykü') {
@@ -829,7 +949,7 @@
         scriptToolbar.style.display = 'none';
       } else {
         draftArea.className = 'mode-screenplay';
-        draftArea.placeholder = 'İÇ. ATÖLYE - GECE\n\nMasanın üzerinde tek bir gaz lambası yanmaktadır...';
+        draftArea.placeholder = 'İÇ. ATÖLYE - GECE\n\nMasanın üzerinde tek bir gaz lambası yanmaktadır...\n\n(Tab tuşuna basarak Karakter Adı yazabilirsiniz)';
         scriptToolbar.style.display = 'flex';
       }
 
@@ -846,7 +966,6 @@
     }
 
     function goHome() {
-      // Eğer mevcut projede hiçbir şey yazılmadıysa hiç kaydetmeden ana sayfaya dön
       currentProject = null;
       document.getElementById('editorView').style.display = 'none';
       document.getElementById('homeView').style.display = 'block';
@@ -857,14 +976,13 @@
       const listEl = document.getElementById('projectList');
       listEl.innerHTML = '';
       
-      // Boş/hayalet olanları filtrele
       appData.projects = appData.projects.filter(hasRealContent);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
 
       document.getElementById('totalCount').innerText = `${appData.projects.length} Proje`;
 
       if (appData.projects.length === 0) {
-        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding:35px;">Henüz bir fikir kaydedilmedi. Yukarıdan bir tür seçerek başlayın!</p>';
+        listEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.9rem; text-align:center; padding:35px;">Henüz bir çalışma kaydedilmedi. Yukarıdan bir tür seçerek başlayın!</p>';
         return;
       }
 
@@ -887,7 +1005,7 @@
       });
     }
 
-    // --- SEKME GEÇİŞLERİ VE SAYAÇ ---
+    // --- SEKME VE HESAPLAMALAR ---
     function switchTab(btn, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -905,7 +1023,7 @@
       document.getElementById('screenTime').innerText = `~${minutes > 0 ? minutes : 1} Dk`;
     }
 
-    // --- AMERİKAN SENARYO ARAÇ ÇUBUĞU (HIZLI ETİKETLER) ---
+    // Butonla Hızlı Etiket Ekleme
     function insertScriptTag(type) {
       const ta = document.getElementById('pDraft');
       const start = ta.selectionStart;
@@ -971,7 +1089,7 @@
     }
 
     function removeCharacter(index) {
-      if (!confirm('Bu karakter kartı silinsin mi?')) return;
+      if (!confirm('Bu karakter silinsin mi?')) return;
       currentProject.characters.splice(index, 1);
       renderCharacters();
       autoSave();
@@ -1031,7 +1149,7 @@
       goHome();
     }
 
-    // --- WORD (.DOCX) VE METİN (.TXT) İÇE AKTARMA ---
+    // --- WORD VE METİN İÇE AKTARMA ---
     function importExternalDoc(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1044,19 +1162,17 @@
           const arrayBuffer = loadEvent.target.result;
           mammoth.extractRawText({ arrayBuffer: arrayBuffer })
             .then(function(result) {
-              const text = result.value;
-              createNewProjectWithContent(fileName, text);
+              createNewProjectWithContent(fileName, result.value);
             })
             .catch(function(err) {
-              alert('Word dosyası okunurken hata oluştu: ' + err.message);
+              alert('Word belgesi okunamadı: ' + err.message);
             });
         };
         reader.readAsArrayBuffer(file);
       } else if (file.name.endsWith('.txt')) {
         const reader = new FileReader();
         reader.onload = function(loadEvent) {
-          const text = loadEvent.target.result;
-          createNewProjectWithContent(fileName, text);
+          createNewProjectWithContent(fileName, loadEvent.target.result);
         };
         reader.readAsText(file);
       }
@@ -1080,12 +1196,11 @@
       appData.projects.unshift(newProj);
       persist();
       openExistingProject(newProj.id);
-      // Doğrudan taslak sekmesine git
       const draftTab = document.getElementById('draftTabBtn');
       switchTab(draftTab, 'tab-draft');
     }
 
-    // --- KIVILCIM / İLHAM ZARI ---
+    // --- KIVILCIM VE YEDEKLEME ---
     function triggerSpark() {
       const randomText = sparks[Math.floor(Math.random() * sparks.length)];
       document.getElementById('sparkText').innerText = `"${randomText}"`;
@@ -1096,7 +1211,6 @@
       document.getElementById('sparkModal').style.display = 'none';
     }
 
-    // --- YEDEK İNDİR / YÜKLE ---
     function exportData() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
       const dlAnchor = document.createElement('a');
@@ -1118,7 +1232,7 @@
             renderProjectList();
             alert('Arşiv başarıyla geri yüklendi!');
           } else {
-            alert('Geçersiz dosya formatı.');
+            alert('Geçersiz dosya.');
           }
         } catch(err) {
           alert('Dosya yüklenirken hata oluştu.');
@@ -1159,7 +1273,6 @@
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
-    // Başlangıç
     renderProjectList();
 
     if ('serviceWorker' in navigator) {
