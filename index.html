@@ -90,20 +90,33 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       cursor: pointer;
     }
     .brand-box {
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .brand-logo-img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .brand-text-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       justify-content: center;
     }
     .brand-title {
       font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 2.5px;
       color: var(--accent);
       line-height: 1;
     }
@@ -112,7 +125,7 @@
       letter-spacing: 2px;
       color: var(--text-muted);
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 3px;
       font-weight: 600;
     }
     .header-right {
@@ -555,16 +568,17 @@
 </head>
 <body>
 
-  <!-- ÜST BAR: SİMETRİK TAM MERKEZ -->
+  <!-- ÜST BAR: SİMETRİK TAM MERKEZ LOGO & BAŞLIK -->
   <header>
-    <div class="header-left">
-      <!-- Mobilde gerekirse kullanılabilir -->
-    </div>
+    <div class="header-left"></div>
     
     <div class="header-center" onclick="goHome()">
       <div class="brand-box">
-        <div class="brand-title">TÜY</div>
-        <div class="brand-sub">TASARLA · ÜRET · YAY</div>
+        <img class="brand-logo-img" src="logo.png" onerror="this.style.display='none'" alt="TÜY Logo">
+        <div class="brand-text-wrap">
+          <div class="brand-title">TÜY</div>
+          <div class="brand-sub">TASARLA · ÜRET · YAY</div>
+        </div>
       </div>
     </div>
     
@@ -818,7 +832,6 @@
       calculateStats(text);
       autoSave();
 
-      // @ karakter kontrolü
       const cursor = ta.selectionStart;
       const lastChar = text[cursor - 1];
       const chipsBar = document.getElementById('charChipsBar');
@@ -838,25 +851,22 @@
       const end = ta.selectionEnd;
       const text = ta.value;
 
-      // 1. TAB TUŞU ZEKASI -> Karakter Girintisine Git
       if (e.key === 'Tab') {
         e.preventDefault();
-        const charIndent = '                    '; // 20 Karakter boşluk (Hollywood standardı)
+        const charIndent = '                    ';
         ta.value = text.substring(0, start) + charIndent + text.substring(end);
         ta.selectionStart = ta.selectionEnd = start + charIndent.length;
         handleDraftTyping();
         return;
       }
 
-      // 2. ENTER TUŞU ZEKASI -> Karakterden Sonra Otomatik Diyalog Girintisi
       if (e.key === 'Enter') {
         const lineStart = text.lastIndexOf('\n', start - 1) + 1;
         const currentLine = text.substring(lineStart, start);
 
-        // Eğer mevcut satır Karakter Girintisiyle başlıyorsa (20 boşluk)
         if (currentLine.startsWith('                    ')) {
           e.preventDefault();
-          const dialogueIndent = '\n          '; // 10 Karakter boşluk (Diyalog girintisi)
+          const dialogueIndent = '\n          ';
           ta.value = text.substring(0, start) + dialogueIndent + text.substring(end);
           ta.selectionStart = ta.selectionEnd = start + dialogueIndent.length;
           handleDraftTyping();
@@ -865,7 +875,6 @@
       }
     }
 
-    // @ Karakter Çağırma
     function renderCharChips() {
       const container = document.getElementById('charChipsContainer');
       const chipsBar = document.getElementById('charChipsBar');
@@ -893,7 +902,6 @@
       const text = ta.value;
       const cursor = ta.selectionStart;
 
-      // Son @ işaretini bulup sil ve yerine Amerikan formatında yerleştir
       const atIndex = text.lastIndexOf('@', cursor - 1);
       const before = atIndex !== -1 ? text.substring(0, atIndex) : text.substring(0, cursor);
       const after = text.substring(cursor);
@@ -1005,7 +1013,6 @@
       });
     }
 
-    // --- SEKME VE HESAPLAMALAR ---
     function switchTab(btn, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1023,7 +1030,6 @@
       document.getElementById('screenTime').innerText = `~${minutes > 0 ? minutes : 1} Dk`;
     }
 
-    // Butonla Hızlı Etiket Ekleme
     function insertScriptTag(type) {
       const ta = document.getElementById('pDraft');
       const start = ta.selectionStart;
@@ -1043,7 +1049,6 @@
       handleDraftTyping();
     }
 
-    // --- KARAKTER VE SAHNE KARTLARI ---
     function renderCharacters() {
       const container = document.getElementById('characterList');
       container.innerHTML = '';
@@ -1149,7 +1154,6 @@
       goHome();
     }
 
-    // --- WORD VE METİN İÇE AKTARMA ---
     function importExternalDoc(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1200,7 +1204,6 @@
       switchTab(draftTab, 'tab-draft');
     }
 
-    // --- KIVILCIM VE YEDEKLEME ---
     function triggerSpark() {
       const randomText = sparks[Math.floor(Math.random() * sparks.length)];
       document.getElementById('sparkText').innerText = `"${randomText}"`;
@@ -1241,7 +1244,6 @@
       reader.readAsText(event.target.files[0]);
     }
 
-    // --- WHATSAPP İLE GÖNDER ---
     function shareWhatsApp() {
       if (!currentProject) return;
 
