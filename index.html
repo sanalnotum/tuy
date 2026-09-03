@@ -10,13 +10,16 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="logo.png">
 
-  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <!-- Google Fonts: Cinzel, Plus Jakarta Sans, JetBrains Mono, Merriweather -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Word (.docx) Okuyucu Kütüphanesi -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
   <style>
-    /* --- TEMA DEĞİŞKENLERİ --- */
+    /* --- RENK VE TEMA PALETİ --- */
     :root[data-theme="light"] {
       --bg: #F8F9FA;
       --card-bg: #FFFFFF;
@@ -28,6 +31,7 @@
       --text: #111827;
       --text-muted: #4B5563;
       --input-bg: #FFFFFF;
+      --script-bg: #FCFCFD;
       --shadow: 0 4px 14px rgba(0,0,0,0.05);
       --danger: #DC2626;
       --success: #15803D;
@@ -44,6 +48,7 @@
       --text: #F9FAFB;
       --text-muted: #9CA3AF;
       --input-bg: #141418;
+      --script-bg: #141417;
       --shadow: 0 4px 14px rgba(0,0,0,0.4);
       --danger: #EF4444;
       --success: #22C55E;
@@ -222,7 +227,7 @@
     .proj-title { font-weight: 700; font-size: 1.08rem; color: var(--text); }
     .proj-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
 
-    /* Editör Sayfası */
+    /* Editör Ekranı */
     #editorView { display: none; }
     .editor-header-bar {
       display: flex;
@@ -243,6 +248,10 @@
       color: var(--text);
       cursor: pointer;
       box-shadow: var(--shadow);
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
     }
     .btn-spark {
       display: inline-flex;
@@ -314,7 +323,50 @@
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
-    /* Canlı Sayaç & Daktilo Alanı */
+    /* --- AMERİKAN TİPİ SENARYO & KİTAP ARAÇ ÇUBUĞU --- */
+    .script-toolbar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding: 6px;
+      background: var(--card-subtle);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .tool-btn {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .tool-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Senaryo vs Roman Görünüm Alanı */
+    textarea.mode-screenplay {
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.7;
+      font-size: 1rem;
+      background: var(--script-bg);
+    }
+    textarea.mode-novel {
+      font-family: 'Merriweather', serif;
+      line-height: 1.9;
+      font-size: 1.05rem;
+      background: var(--script-bg);
+      text-indent: 1.5em;
+    }
+
+    /* Canlı Sayaç */
     .stats-bar {
       display: flex;
       justify-content: flex-end;
@@ -325,14 +377,8 @@
       font-weight: 600;
     }
     .stats-bar span b { color: var(--accent); font-weight: 700; }
-    textarea.script-mode {
-      font-family: 'JetBrains Mono', monospace;
-      line-height: 1.75;
-      font-size: 1.02rem;
-      background: var(--input-bg);
-    }
 
-    /* Kart Yapıları */
+    /* Kartlar */
     .sub-item-card {
       background: var(--card-bg);
       border: 1.5px solid var(--border);
@@ -368,7 +414,7 @@
     }
     .add-btn:hover { background: var(--accent-soft); }
 
-    /* Alt Aksiyonlar */
+    /* Alt Aksiyon Çubuğu */
     .action-row {
       display: flex;
       gap: 12px;
@@ -395,7 +441,7 @@
     :root[data-theme="dark"] .btn-pdf { background: #E5E7EB; color: #111; }
     .btn-danger { background: rgba(220, 38, 38, 0.1); color: var(--danger); border: 1px solid var(--danger); }
 
-    /* Yedek Kutusu */
+    /* Yedek & Word Yükleme Kutusu */
     .backup-box {
       margin-top: 35px;
       padding: 18px;
@@ -414,9 +460,9 @@
       color: var(--text-muted);
       font-weight: 500;
     }
-    .backup-actions { display: flex; gap: 8px; }
+    .backup-actions { display: flex; gap: 8px; flex-wrap: wrap; }
     .btn-subtle {
-      padding: 8px 16px;
+      padding: 8px 14px;
       background: var(--card-subtle);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -462,16 +508,18 @@
       font-style: italic;
     }
 
-    /* Baskı / PDF */
+    /* Amerikan Standartlarında Senaryo Baskısı (PDF) */
     @media print {
-      body { background: #fff !important; color: #000 !important; font-family: serif; }
-      header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar { display: none !important; }
+      body { background: #fff !important; color: #000 !important; }
+      header, .editor-top-nav, .editor-header-bar, .action-row, .add-btn, .remove-btn, .cat-btn, #homeView, .backup-box, .stats-bar, .script-toolbar { display: none !important; }
       #editorView { display: block !important; }
       .tab-content { display: block !important; margin-bottom: 30px; }
-      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; font-size: 11pt !important; }
+      input, textarea { border: none !important; color: #000 !important; background: transparent !important; padding: 0 !important; width: 100% !important; resize: none; box-shadow: none !important; }
+      textarea.mode-screenplay { font-family: 'Courier Prime', Courier, monospace !important; font-size: 12pt !important; line-height: 1.5 !important; }
+      textarea.mode-novel { font-family: 'Merriweather', serif !important; font-size: 11pt !important; text-indent: 2em !important; }
       .sub-item-card { border: 1px solid #ddd !important; page-break-inside: avoid; margin-bottom: 16px; }
       .print-header { display: block !important; text-align: center; border-bottom: 2px solid #000; margin-bottom: 25px; padding-bottom: 10px; }
-      .print-header h1 { font-size: 24pt; margin: 0; font-family: 'Cinzel', serif; }
+      .print-header h1 { font-size: 22pt; margin: 0; font-family: 'Cinzel', serif; }
     }
     .print-header { display: none; }
   </style>
@@ -503,19 +551,19 @@
     <section id="homeView">
       <div class="section-title">Hemen Başla (Kıvılcım Yakala)</div>
       <div class="grid-categories">
-        <div class="cat-btn" onclick="createNewProject('Kısa Film')">
+        <div class="cat-btn" onclick="startNewProject('Kısa Film')">
           <span class="icon">🎬</span>
           <span class="label">Kısa Film</span>
         </div>
-        <div class="cat-btn" onclick="createNewProject('Senaryo')">
+        <div class="cat-btn" onclick="startNewProject('Senaryo')">
           <span class="icon">🎞️</span>
           <span class="label">Senaryo / Dizi</span>
         </div>
-        <div class="cat-btn" onclick="createNewProject('Öykü')">
+        <div class="cat-btn" onclick="startNewProject('Öykü')">
           <span class="icon">📖</span>
           <span class="label">Hikaye / Öykü</span>
         </div>
-        <div class="cat-btn" onclick="createNewProject('Hızlı Fikir')">
+        <div class="cat-btn" onclick="startNewProject('Hızlı Fikir')">
           <span class="icon">⚡</span>
           <span class="label">Fikir Notu</span>
         </div>
@@ -527,15 +575,17 @@
       </div>
       <div id="projectList"></div>
 
-      <!-- JSON Arşiv Alanı -->
+      <!-- Dışa/İçe Aktar & Word Belgesi Yükleme -->
       <div class="backup-box">
         <div class="backup-text">
-          <b>Cihazlar Arası Aktarım:</b> Notlarınızı tablete veya bilgisayara taşımak için yedeği indirin ya da yükleyin.
+          <b>Dışa & İçe Aktar:</b> Word (.docx) belgelerinizi aktarabilir veya yedek alabilirsiniz.
         </div>
         <div class="backup-actions">
+          <button class="btn-subtle" onclick="document.getElementById('docFileInput').click()">📄 Word Dosyası Aç (.docx)</button>
           <button class="btn-subtle" onclick="exportData()">💾 Yedeği İndir (JSON)</button>
           <button class="btn-subtle" onclick="document.getElementById('importFile').click()">📂 Yedek Yükle</button>
           <input type="file" id="importFile" style="display:none" accept=".json" onchange="importData(event)">
+          <input type="file" id="docFileInput" style="display:none" accept=".docx,.txt" onchange="importExternalDoc(event)">
         </div>
       </div>
     </section>
@@ -545,7 +595,9 @@
       
       <div class="editor-header-bar">
         <button class="btn-back" onclick="goHome()">‹ Tüm Projelerim</button>
-        <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım Yakala</button>
+        <div class="header-actions">
+          <button class="btn-spark" onclick="triggerSpark()">🎲 Kıvılcım</button>
+        </div>
       </div>
 
       <div class="print-header">
@@ -558,26 +610,26 @@
         <button class="tab-btn active" onclick="switchTab(this, 'tab-core')">🎯 Temel Fikir</button>
         <button class="tab-btn" onclick="switchTab(this, 'tab-characters')">🎭 Karakterler</button>
         <button class="tab-btn" onclick="switchTab(this, 'tab-scenes')">📑 Sahne Kartları</button>
-        <button class="tab-btn" onclick="switchTab(this, 'tab-draft')">🖋️ Taslak & Daktilo</button>
+        <button class="tab-btn" id="draftTabBtn" onclick="switchTab(this, 'tab-draft')">🖋️ Yazım & Daktilo</button>
       </div>
 
       <!-- SEKME 1: Temel Fikir -->
       <div id="tab-core" class="tab-content">
         <div class="form-group">
           <label>Çalışma Başlığı</label>
-          <input type="text" id="pTitle" placeholder="Örn: Sessizliğin Rengi" oninput="autoSave()">
+          <input type="text" id="pTitle" placeholder="Örn: Sessizliğin Rengi" oninput="handleTyping()">
         </div>
         <div class="form-group">
           <label>Tür & Dönem / Mekan Atmosferi</label>
-          <input type="text" id="pGenre" placeholder="Örn: 1970'ler, Yağmurlu Boğaz Kıyısı, Psikolojik Gerilim" oninput="autoSave()">
+          <input type="text" id="pGenre" placeholder="Örn: 1970'ler, Yağmurlu Boğaz Kıyısı, Psikolojik Gerilim" oninput="handleTyping()">
         </div>
         <div class="form-group">
           <label>Logline (Tek Cümlelik Kanca / Kim, Ne İstiyor, Engel Ne?)</label>
-          <textarea id="pLogline" rows="3" placeholder="Emekli bir terzi, sandığında bulduğu eski bir kumaşın izini sürerken..." oninput="autoSave()"></textarea>
+          <textarea id="pLogline" rows="3" placeholder="Emekli bir terzi, sandığında bulduğu eski bir mektubun izini sürerken..." oninput="handleTyping()"></textarea>
         </div>
         <div class="form-group">
           <label>Dramatik Çatışma & Alt Metin (Tema)</label>
-          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi fısıldıyor? Karakterin içsel hesaplaşması ne?" oninput="autoSave()"></textarea>
+          <textarea id="pTheme" rows="4" placeholder="Bu hikaye aslında neyi fısıldıyor? Karakterin içsel hesaplaşması ne?" oninput="handleTyping()"></textarea>
         </div>
       </div>
 
@@ -593,19 +645,31 @@
         <button class="add-btn" onclick="addScene()">+ Yeni Sahne Kartı Ekle</button>
       </div>
 
-      <!-- SEKME 4: Daktilo Modu -->
+      <!-- SEKME 4: Daktilo & Yazım Modu (Çift Motorlu) -->
       <div id="tab-draft" class="tab-content" style="display:none;">
+        
+        <!-- Canlı İstatistikler -->
         <div class="stats-bar">
           <span>Kelime: <b id="wordCount">0</b></span>
           <span>Tahmini Sayfa: <b id="pageCount">0</b></span>
           <span>Ekran Süresi: <b id="screenTime">~0 Dk</b></span>
         </div>
+
+        <!-- Amerikan Senaryo Hızlı Araç Çubuğu (Senaryo / Kısa Film için) -->
+        <div class="script-toolbar" id="scriptToolbar">
+          <button class="tool-btn" onclick="insertScriptTag('SCENE')">🎬 Sahne Başlığı</button>
+          <button class="tool-btn" onclick="insertScriptTag('CHARACTER')">👤 Karakter</button>
+          <button class="tool-btn" onclick="insertScriptTag('PAREN')">( ) Parantez</button>
+          <button class="tool-btn" onclick="insertScriptTag('DIALOGUE')">💬 Diyalog</button>
+          <button class="tool-btn" onclick="insertScriptTag('ACTION')">🏃 Aksiyon</button>
+        </div>
+
         <div class="form-group">
-          <textarea id="pDraft" class="script-mode" rows="18" placeholder="İÇ. ATÖLYE - GECE&#10;&#10;Masanın üzerinde tek bir gaz lambası yanmaktadır. Yağmur damlaları cama sertçe vurur..." oninput="handleDraftInput()"></textarea>
+          <textarea id="pDraft" class="mode-screenplay" rows="18" placeholder="Metninizi buraya yazın..." oninput="handleDraftTyping()"></textarea>
         </div>
       </div>
 
-      <!-- Alt Aksiyon Çubuğu -->
+      <!-- Alt Aksiyonlar -->
       <div class="action-row">
         <button class="btn btn-wa" onclick="shareWhatsApp()">📱 WhatsApp'a Gönder</button>
         <button class="btn btn-pdf" onclick="window.print()">🖨️ PDF / Yazdır</button>
@@ -615,7 +679,7 @@
 
   </main>
 
-  <!-- Kıvılcım (Zar) Modalı -->
+  <!-- İlham Modalı -->
   <div class="spark-modal" id="sparkModal" onclick="closeSpark(event)">
     <div class="spark-card" onclick="event.stopPropagation()">
       <h3>🎲 Yaratıcı Fısıltı</h3>
@@ -626,7 +690,7 @@
   </div>
 
   <script>
-    // --- TEMA YÖNETİMİ (GECE / GÜNDÜZ) ---
+    // --- TEMA YÖNETİMİ ---
     const THEME_KEY = 'TUY_USER_THEME';
     let currentTheme = localStorage.getItem(THEME_KEY) || 'light';
 
@@ -641,13 +705,12 @@
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       applyTheme(currentTheme);
     }
-
     applyTheme(currentTheme);
 
     // --- VERİ MODELİ VE DEPOLAMA ---
-    const STORAGE_KEY = 'TUY_DATA_STORE_V2';
+    const STORAGE_KEY = 'TUY_DATA_STORE_V3';
     let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { projects: [] };
-    let currentProjId = null;
+    let currentProject = null;
     let saveTimeout = null;
 
     const sparks = [
@@ -670,35 +733,61 @@
       setTimeout(() => { dot.innerText = 'Kayıtlı'; }, 1000);
     }
 
+    // --- HAYALET TASLAKLARI ÖNLEME MEKANİZMASI ---
+    // Yazar gerçekten bir şey yazdı mı kontrol eder
+    function hasRealContent(proj) {
+      if (!proj) return false;
+      const hasTitle = proj.title && proj.title.trim() !== '' && proj.title !== 'İsimsiz Taslak';
+      const hasGenre = proj.genre && proj.genre.trim() !== '';
+      const hasLogline = proj.logline && proj.logline.trim() !== '';
+      const hasTheme = proj.theme && proj.theme.trim() !== '';
+      const hasDraft = proj.draft && proj.draft.trim() !== '';
+      const hasChars = proj.characters && proj.characters.some(c => (c.name && c.name.trim()) || (c.goal && c.goal.trim()));
+      const hasScenes = proj.scenes && proj.scenes.some(s => (s.slug && s.slug.trim()) || (s.action && s.action.trim()));
+      return hasTitle || hasGenre || hasLogline || hasTheme || hasDraft || hasChars || hasScenes;
+    }
+
     function autoSave() {
       const dot = document.getElementById('saveStatus');
       dot.innerText = 'Kaydediliyor...';
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
-        const proj = appData.projects.find(p => p.id === currentProjId);
-        if (!proj) return;
+        if (!currentProject) return;
 
-        proj.title = document.getElementById('pTitle').value || 'İsimsiz Taslak';
-        proj.genre = document.getElementById('pGenre').value;
-        proj.logline = document.getElementById('pLogline').value;
-        proj.theme = document.getElementById('pTheme').value;
-        proj.draft = document.getElementById('pDraft').value;
-        proj.updatedAt = new Date().toISOString();
+        currentProject.title = document.getElementById('pTitle').value || 'İsimsiz Taslak';
+        currentProject.genre = document.getElementById('pGenre').value;
+        currentProject.logline = document.getElementById('pLogline').value;
+        currentProject.theme = document.getElementById('pTheme').value;
+        currentProject.draft = document.getElementById('pDraft').value;
+        currentProject.updatedAt = new Date().toISOString();
 
-        persist();
+        // Eğer içerik girildiyse ve henüz listeye eklenmemişse şimdi ekle!
+        if (hasRealContent(currentProject)) {
+          const index = appData.projects.findIndex(p => p.id === currentProject.id);
+          if (index === -1) {
+            appData.projects.unshift(currentProject);
+          } else {
+            appData.projects[index] = currentProject;
+          }
+          persist();
+        }
       }, 350);
     }
 
-    // --- NAVİGASYON ---
-    function goHome() {
-      currentProjId = null;
-      document.getElementById('editorView').style.display = 'none';
-      document.getElementById('homeView').style.display = 'block';
-      renderProjectList();
+    function handleTyping() {
+      autoSave();
     }
 
-    function createNewProject(type) {
-      const newProj = {
+    function handleDraftTyping() {
+      const text = document.getElementById('pDraft').value;
+      calculateStats(text);
+      autoSave();
+    }
+
+    // --- PROJE YÖNETİMİ ---
+    function startNewProject(type) {
+      // Geçici bir nesne oluştur, henüz appData.projects içine EKLEME!
+      currentProject = {
         id: 'tuy_' + Date.now(),
         type: type,
         title: '',
@@ -711,16 +800,17 @@
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
-      appData.projects.unshift(newProj);
-      persist();
-      openProject(newProj.id);
+      openEditor(currentProject);
     }
 
-    function openProject(id) {
-      currentProjId = id;
+    function openExistingProject(id) {
       const proj = appData.projects.find(p => p.id === id);
       if (!proj) return;
+      currentProject = JSON.parse(JSON.stringify(proj)); // kopya al
+      openEditor(currentProject);
+    }
 
+    function openEditor(proj) {
       document.getElementById('pTitle').value = proj.title || '';
       document.getElementById('pGenre').value = proj.genre || '';
       document.getElementById('pLogline').value = proj.logline || '';
@@ -729,6 +819,19 @@
 
       document.getElementById('printTitle').innerText = proj.title || 'İsimsiz Taslak';
       document.getElementById('printMeta').innerText = `${proj.type} · ${proj.genre || ''}`;
+
+      // Türe göre mod ayarla (Senaryo vs Roman)
+      const draftArea = document.getElementById('pDraft');
+      const scriptToolbar = document.getElementById('scriptToolbar');
+      if (proj.type === 'Öykü') {
+        draftArea.className = 'mode-novel';
+        draftArea.placeholder = 'Bölüm 1\n\nKasabanın üzerine çöken sis, eski taş köprünün kemerlerini yavaşça yutuyordu...';
+        scriptToolbar.style.display = 'none';
+      } else {
+        draftArea.className = 'mode-screenplay';
+        draftArea.placeholder = 'İÇ. ATÖLYE - GECE\n\nMasanın üzerinde tek bir gaz lambası yanmaktadır...';
+        scriptToolbar.style.display = 'flex';
+      }
 
       calculateStats(proj.draft || '');
       renderCharacters();
@@ -742,9 +845,22 @@
       window.scrollTo(0,0);
     }
 
+    function goHome() {
+      // Eğer mevcut projede hiçbir şey yazılmadıysa hiç kaydetmeden ana sayfaya dön
+      currentProject = null;
+      document.getElementById('editorView').style.display = 'none';
+      document.getElementById('homeView').style.display = 'block';
+      renderProjectList();
+    }
+
     function renderProjectList() {
       const listEl = document.getElementById('projectList');
       listEl.innerHTML = '';
+      
+      // Boş/hayalet olanları filtrele
+      appData.projects = appData.projects.filter(hasRealContent);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+
       document.getElementById('totalCount').innerText = `${appData.projects.length} Proje`;
 
       if (appData.projects.length === 0) {
@@ -766,23 +882,17 @@
           </div>
           <span style="color:var(--accent); font-size:1.3rem; font-weight:700;">›</span>
         `;
-        card.onclick = () => openProject(p.id);
+        card.onclick = () => openExistingProject(p.id);
         listEl.appendChild(card);
       });
     }
 
-    // --- SEKME VE SAYAC ---
+    // --- SEKME GEÇİŞLERİ VE SAYAÇ ---
     function switchTab(btn, tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById(tabId).style.display = 'block';
       if (btn) btn.classList.add('active');
-    }
-
-    function handleDraftInput() {
-      const text = document.getElementById('pDraft').value;
-      calculateStats(text);
-      autoSave();
     }
 
     function calculateStats(text) {
@@ -795,13 +905,33 @@
       document.getElementById('screenTime').innerText = `~${minutes > 0 ? minutes : 1} Dk`;
     }
 
-    // --- KARAKTER YÖNETİMİ ---
+    // --- AMERİKAN SENARYO ARAÇ ÇUBUĞU (HIZLI ETİKETLER) ---
+    function insertScriptTag(type) {
+      const ta = document.getElementById('pDraft');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      let tag = '';
+
+      switch(type) {
+        case 'SCENE': tag = '\n\nİÇ. MEKAN - GÜN\n'; break;
+        case 'CHARACTER': tag = '\n\n                    KARAKTER ADI\n'; break;
+        case 'PAREN': tag = '          (fısıldar)\n'; break;
+        case 'DIALOGUE': tag = '          Diyalog buraya gelecek...\n'; break;
+        case 'ACTION': tag = '\nKarakter kapıya doğru yaklaşır.\n'; break;
+      }
+
+      ta.value = ta.value.substring(0, start) + tag + ta.value.substring(end);
+      ta.focus();
+      handleDraftTyping();
+    }
+
+    // --- KARAKTER VE SAHNE KARTLARI ---
     function renderCharacters() {
       const container = document.getElementById('characterList');
       container.innerHTML = '';
-      const proj = appData.projects.find(p => p.id === currentProjId);
+      if (!currentProject) return;
 
-      proj.characters.forEach((char, index) => {
+      currentProject.characters.forEach((char, index) => {
         const div = document.createElement('div');
         div.className = 'sub-item-card';
         div.innerHTML = `
@@ -828,39 +958,37 @@
     }
 
     function addCharacter() {
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.characters.push({ name:'', goal:'', flaw:'', notes:'' });
-      persist();
+      if (!currentProject) return;
+      currentProject.characters.push({ name:'', goal:'', flaw:'', notes:'' });
       renderCharacters();
+      autoSave();
     }
 
     function updateChar(index, field, val) {
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.characters[index][field] = val;
+      if (!currentProject) return;
+      currentProject.characters[index][field] = val;
       autoSave();
     }
 
     function removeCharacter(index) {
       if (!confirm('Bu karakter kartı silinsin mi?')) return;
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.characters.splice(index, 1);
-      persist();
+      currentProject.characters.splice(index, 1);
       renderCharacters();
+      autoSave();
     }
 
-    // --- SAHNE KARTLARI ---
     function renderScenes() {
       const container = document.getElementById('sceneList');
       container.innerHTML = '';
-      const proj = appData.projects.find(p => p.id === currentProjId);
+      if (!currentProject) return;
 
-      proj.scenes.forEach((scene, index) => {
+      currentProject.scenes.forEach((scene, index) => {
         const div = document.createElement('div');
         div.className = 'sub-item-card';
         div.innerHTML = `
           <button class="remove-btn" onclick="removeScene(${index})">✕</button>
           <div class="form-group" style="margin-bottom:10px;">
-            <label>Sahne ${index + 1}: Başlık & Mekan (İÇ/DIŞ - ZAMAN)</label>
+            <label>Sahne ${index + 1}: Başlık & Mekan</label>
             <input type="text" value="${scene.slug || ''}" placeholder="Örn: İÇ. TERZİHANE - AKŞAMÜSTÜ" oninput="updateScene(${index}, 'slug', this.value)">
           </div>
           <div class="form-group" style="margin-bottom:10px;">
@@ -877,31 +1005,84 @@
     }
 
     function addScene() {
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.scenes.push({ slug:'', action:'', beat:'' });
-      persist();
+      if (!currentProject) return;
+      currentProject.scenes.push({ slug:'', action:'', beat:'' });
       renderScenes();
+      autoSave();
     }
 
     function updateScene(index, field, val) {
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.scenes[index][field] = val;
+      if (!currentProject) return;
+      currentProject.scenes[index][field] = val;
       autoSave();
     }
 
     function removeScene(index) {
       if (!confirm('Bu sahne kartı silinsin mi?')) return;
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      proj.scenes.splice(index, 1);
-      persist();
+      currentProject.scenes.splice(index, 1);
       renderScenes();
+      autoSave();
     }
 
     function deleteCurrentProject() {
-      if (!confirm('Bu projeyi tamamen silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) return;
-      appData.projects = appData.projects.filter(p => p.id !== currentProjId);
+      if (!confirm('Bu projeyi tamamen silmek istediğinizden emin misiniz?')) return;
+      appData.projects = appData.projects.filter(p => p.id !== currentProject.id);
       persist();
       goHome();
+    }
+
+    // --- WORD (.DOCX) VE METİN (.TXT) İÇE AKTARMA ---
+    function importExternalDoc(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const fileName = file.name.replace(/\.[^/.]+$/, "");
+
+      if (file.name.endsWith('.docx')) {
+        const reader = new FileReader();
+        reader.onload = function(loadEvent) {
+          const arrayBuffer = loadEvent.target.result;
+          mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+            .then(function(result) {
+              const text = result.value;
+              createNewProjectWithContent(fileName, text);
+            })
+            .catch(function(err) {
+              alert('Word dosyası okunurken hata oluştu: ' + err.message);
+            });
+        };
+        reader.readAsArrayBuffer(file);
+      } else if (file.name.endsWith('.txt')) {
+        const reader = new FileReader();
+        reader.onload = function(loadEvent) {
+          const text = loadEvent.target.result;
+          createNewProjectWithContent(fileName, text);
+        };
+        reader.readAsText(file);
+      }
+      event.target.value = '';
+    }
+
+    function createNewProjectWithContent(title, content) {
+      const newProj = {
+        id: 'tuy_' + Date.now(),
+        type: 'Senaryo',
+        title: title,
+        genre: '',
+        logline: '',
+        theme: '',
+        draft: content,
+        characters: [],
+        scenes: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      appData.projects.unshift(newProj);
+      persist();
+      openExistingProject(newProj.id);
+      // Doğrudan taslak sekmesine git
+      const draftTab = document.getElementById('draftTabBtn');
+      switchTab(draftTab, 'tab-draft');
     }
 
     // --- KIVILCIM / İLHAM ZARI ---
@@ -915,12 +1096,12 @@
       document.getElementById('sparkModal').style.display = 'none';
     }
 
-    // --- DIŞA / İÇE AKTAR (JSON TAŞIMA) ---
+    // --- YEDEK İNDİR / YÜKLE ---
     function exportData() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", `TUY_Yedek_${new Date().toISOString().slice(0,10)}.json`);
+      dlAnchor.setAttribute("download", `TUY_Arsiv_${new Date().toISOString().slice(0,10)}.json`);
       document.body.appendChild(dlAnchor);
       dlAnchor.click();
       dlAnchor.remove();
@@ -935,12 +1116,12 @@
             appData = imported;
             persist();
             renderProjectList();
-            alert('Yedek başarıyla yüklendi!');
+            alert('Arşiv başarıyla geri yüklendi!');
           } else {
-            alert('Geçersiz yedek dosyası.');
+            alert('Geçersiz dosya formatı.');
           }
         } catch(err) {
-          alert('Dosya okunurken bir hata oluştu.');
+          alert('Dosya yüklenirken hata oluştu.');
         }
       };
       reader.readAsText(event.target.files[0]);
@@ -948,37 +1129,37 @@
 
     // --- WHATSAPP İLE GÖNDER ---
     function shareWhatsApp() {
-      const proj = appData.projects.find(p => p.id === currentProjId);
-      if (!proj) return;
+      if (!currentProject) return;
 
       let msg = `🪶 *TÜY - TASARLA ÜRET YAY*\n`;
-      msg += `📂 *Proje:* ${proj.title || 'İsimsiz Taslak'} (${proj.type})\n`;
-      if (proj.genre) msg += `📍 *Tür/Atmosfer:* ${proj.genre}\n`;
-      if (proj.logline) msg += `\n🎯 *Logline:*\n${proj.logline}\n`;
-      if (proj.theme) msg += `\n💡 *Tema/Çatışma:*\n${proj.theme}\n`;
+      msg += `📂 *Proje:* ${currentProject.title || 'İsimsiz Taslak'} (${currentProject.type})\n`;
+      if (currentProject.genre) msg += `📍 *Tür/Atmosfer:* ${currentProject.genre}\n`;
+      if (currentProject.logline) msg += `\n🎯 *Logline:*\n${currentProject.logline}\n`;
+      if (currentProject.theme) msg += `\n💡 *Tema/Çatışma:*\n${currentProject.theme}\n`;
 
-      if (proj.characters.length > 0) {
+      if (currentProject.characters.length > 0) {
         msg += `\n🎭 *KARAKTERLER:*\n`;
-        proj.characters.forEach(c => {
+        currentProject.characters.forEach(c => {
           msg += `• *${c.name || 'Karakter'}*: Hedef: ${c.goal || '-'} | Zaaf: ${c.flaw || '-'}\n`;
         });
       }
 
-      if (proj.scenes.length > 0) {
+      if (currentProject.scenes.length > 0) {
         msg += `\n📑 *SAHNE AKIŞI:*\n`;
-        proj.scenes.forEach((s, idx) => {
+        currentProject.scenes.forEach((s, idx) => {
           msg += `${idx + 1}. *${s.slug || 'Sahne'}*: ${s.action || ''}\n`;
         });
       }
 
-      if (proj.draft) {
-        msg += `\n🖋️ *TASLAK / DİYALOG:*\n${proj.draft}\n`;
+      if (currentProject.draft) {
+        msg += `\n🖋️ *TASLAK / METİN:*\n${currentProject.draft}\n`;
       }
 
       const encoded = encodeURIComponent(msg);
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
+    // Başlangıç
     renderProjectList();
 
     if ('serviceWorker' in navigator) {
